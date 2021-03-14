@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <login></login>
+    <!--<login></login>-->
+    <manage></manage>
   </div>
 </template>
 
 <script>
 
-import login from "./page/login/login";
+//import login from "./page/login/login";
+import manage from "./page/manage/manage";
 
 export default {
   name: 'App',
   components: {
-    login
+    //login
+    manage
   }
 }
 </script>
@@ -25,9 +28,10 @@ export default {
   color: #2c3e50;
   margin-top: 0;
 }
-body {
+html,body,#app {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 </style>

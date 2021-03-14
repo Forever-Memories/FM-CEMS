@@ -2,7 +2,7 @@
     <el-row>
         <el-col :span="8" :offset="8">
             <el-card style="border-radius: 30px; margin-top: 100px">
-                <h2>欢迎登录(Alpha)</h2>
+                <h2>欢迎登录FM-CEMS(Alpha)</h2>
                 <el-divider></el-divider>
                 <el-form :model="validateForm" ref="validateForm" label-width="100px" class="demo-ruleForm">
                     <el-form-item
