@@ -1,20 +1,15 @@
 <template>
   <div id="app">
-    <!--<login></login>-->
-    <manage></manage>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 
-//import login from "./page/login/login";
-import manage from "./page/manage/manage";
 
 export default {
   name: 'App',
   components: {
-    //login
-    manage
   }
 }
 </script>

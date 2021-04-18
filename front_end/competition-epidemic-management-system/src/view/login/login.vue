@@ -1,7 +1,8 @@
 <template>
+    <body>
     <el-row>
         <el-col :span="8" :offset="8">
-            <el-card style="border-radius: 30px; margin-top: 100px">
+            <el-card class="login-card">
                 <h2>欢迎登录FM-CEMS(Alpha)</h2>
                 <el-divider></el-divider>
                 <el-form :model="validateForm" ref="validateForm" label-width="100px" class="demo-ruleForm">
@@ -12,7 +13,8 @@
                                 { required: true, message: '用户名不能为空'},
                                 ]"
                     >
-                        <el-input type="text" v-model.number="validateForm.name" placeholder="请输入用户名" autocomplete="off"></el-input>
+                        <el-input type="text" v-model.number="validateForm.name" placeholder="请输入用户名"
+                                  autocomplete="off"></el-input>
                     </el-form-item>
 
                     <el-form-item
@@ -22,7 +24,8 @@
                                 { required: true, message: '密码不能为空'},
                                 ]"
                     >
-                        <el-input type="text" v-model.number="validateForm.password" autocomplete="off" placeholder="请输入密码" show-password></el-input>
+                        <el-input type="text" v-model.number="validateForm.password" autocomplete="off"
+                                  placeholder="请输入密码" show-password></el-input>
                     </el-form-item>
 
                     <el-form-item>
@@ -33,13 +36,19 @@
             </el-card>
         </el-col>
     </el-row>
+    </body>
 </template>
 
-<style>
-body {
-    background-image: url("loginbackgroup.jpg");
-    background-size: cover;
-}
+<style scoped>
+    body {
+        background-image: url("loginbackgroup.jpg");
+        background-size: cover;
+    }
+    .login-card {
+        border-radius: 30px;
+        margin-top: 100px;
+        justify-content: center;
+    }
 </style>
 
 <script>
@@ -57,7 +66,7 @@ body {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert(this.validateForm.name+'登录成功');
+                        this.$router.push("/manage");
                     } else {
                         console.log('error submit!!');
                         return false;
