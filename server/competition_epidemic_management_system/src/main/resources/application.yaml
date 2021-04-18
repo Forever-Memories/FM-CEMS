@@ -5,4 +5,4 @@ spring.datasource:
     password: jim123456
 
 server:
-    port: 8888
+    port: 8080
