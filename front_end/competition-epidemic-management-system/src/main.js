@@ -5,7 +5,7 @@ import router from './router'
 Vue.config.productionTip = false
 
 
-localStorage.setItem('userId', '1')
+localStorage.setItem('userId', '0')
 new Vue({
   router,
   render: h => h(App),
