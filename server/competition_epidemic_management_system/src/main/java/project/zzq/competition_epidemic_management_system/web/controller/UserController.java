@@ -18,9 +18,8 @@ public class UserController {
     private UserLogic userLogic;
 
     @PostMapping("/user/sign-up")
-    public Long signUpUser(@RequestParam String phoneNumber,
-                           @RequestParam String password) {
-        return userLogic.signUpUser(phoneNumber, password);
+    public Long signUpUser(@RequestBody UserSignUpVO userSignUpVO) {
+        return userLogic.signUpUser(userSignUpVO.getPhoneNumber(), userSignUpVO.getPassword());
     }
 
 }

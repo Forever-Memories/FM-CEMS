@@ -1,8 +1,10 @@
 package project.zzq.competition_epidemic_management_system.storage;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -61,5 +63,15 @@ public class UserStorage {
         return kh.getKey().longValue();
     }
 
+
+    public Optional<UserDO> getUserByPhoneNumber(String phoneNumber) {
+        String sql = "SELECT "+ALL_COLUMNS+"FROM `user` WHERE `phone_number` =:phoneNumber";
+
+        try {
+            return Optional.of(db.queryForObject(sql, ImmutableMap.of("phoneNumber", phoneNumber), ROW_MAPPER));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
 
 }
