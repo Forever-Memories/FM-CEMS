@@ -66,12 +66,14 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('http://localhost:8080/competition-epidemic/sign-in',
+                        this.$axios.post('/competition-epidemic/sign-in',
                             {
                               "password": this.validateForm.password,
                               "phoneNumber": this.validateForm.name
                             }).then(res => {
-                              if(res) {
+                              console.log(res)
+                              if(res.data) {
+                                localStorage.setItem('userId', this.validateForm.name)
                                 this.$router.push("/manage");
                               } else {
                                 alert(this.validateForm.name+'登录失败');

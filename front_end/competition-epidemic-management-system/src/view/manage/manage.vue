@@ -97,9 +97,27 @@
                 id_number: '12345678'
             };
             return {
+              list:null,
                 tableData: Array(20).fill(item)
             }
-        }
+        },
+        created() {
+
+        },
+      methods: {
+        getData() {
+              this.$axios.post('/competition-epidemic/sign-in',
+                  {
+                    "password": this.validateForm.password,
+                    "phoneNumber": this.validateForm.name
+                  }).then(() => {
+                    this.list=[{user_id: '0',
+                      name: '朱浙庆',
+                      unit: '安徽大学计科院',
+                      id_number: '12345678'}]
+       })
+      }
+      }
     };
 </script>
 
