@@ -66,8 +66,17 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.get('')
-                        this.$router.push("/manage");
+                        this.$axios.post('http://localhost:8080/competition-epidemic/sign-in',
+                            {
+                              "password": this.validateForm.password,
+                              "phoneNumber": this.validateForm.name
+                            }).then(res => {
+                              if(res) {
+                                this.$router.push("/manage");
+                              } else {
+                                alert(this.validateForm.name+'登录失败');
+                              }
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;
