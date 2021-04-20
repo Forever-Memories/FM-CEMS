@@ -9,8 +9,12 @@ package project.zzq.competition_epidemic_management_system.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import project.zzq.competition_epidemic_management_system.constant.CompetitionEpidemicManagementSystemConstant;
+import project.zzq.competition_epidemic_management_system.web.data.SignInVO;
 import project.zzq.competition_epidemic_management_system.web.logic.SignInLogic;
 
 /**
@@ -22,9 +26,10 @@ public class SignInController {
     @Autowired
     private SignInLogic signInLogic;
 
-    @GetMapping
-    public Boolean signIn(String phoneNumber, String password) {
-        return signInLogic.signIn(phoneNumber, password);
+    @PostMapping("/sign-in")
+    @ResponseBody
+    public boolean signIn(@RequestBody SignInVO signInVO) {
+        return signInLogic.signIn(signInVO.getPhoneNumber(), signInVO.getPassword());
     }
 
 }
