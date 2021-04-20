@@ -3,6 +3,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Router from 'vue-router'
 
+import axios from 'axios';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+Vue.prototype.$axios = axios;
+
 import login from './view/login/login'
 import manage from './view/manage/manage'
 

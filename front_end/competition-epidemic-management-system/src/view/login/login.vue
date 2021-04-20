@@ -66,6 +66,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        this.$axios.get('')
                         this.$router.push("/manage");
                     } else {
                         console.log('error submit!!');
