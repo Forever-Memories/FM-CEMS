@@ -14,16 +14,17 @@
             <el-container>
                 <el-aside width="200px">
                     <el-menu
-                            default-active="2"
+                            default-active="this.$route.path2"
                             class="el-menu-vertical-demo"
                             @open="handleOpen"
                             @close="handleClose"
                             background-color="#545c64"
                             text-color="#fff"
-                            active-text-color="#ffd04b">
-                        <el-menu-item index="1">
+                            active-text-color="#ffd04b"
+                            router>
+                        <el-menu-item index="/manage/testcase">
                             <i class="el-icon-postcard"></i>
-                            <span slot="title">新闻公告</span>
+                            <span slot="title">测试页</span>
                         </el-menu-item>
                         <el-submenu index="2">
                             <template slot="title"><i class="el-icon-user"></i>人员管理</template>
@@ -68,18 +69,7 @@
                     </el-menu>
                 </el-aside>
                 <el-container>
-                    <el-main>
-                        <el-table :data="tableData">
-                            <el-table-column prop="user_id" label="人员id"  width="100">
-                            </el-table-column>
-                            <el-table-column prop="name" label="姓名" width="120">
-                            </el-table-column>
-                            <el-table-column prop="unit" label="所属单位" width="180">
-                            </el-table-column>
-                            <el-table-column prop="id_number" label="身份证号">
-                            </el-table-column>
-                        </el-table>
-                    </el-main>
+                    <router-view></router-view>
                 </el-container>
             </el-container>
         </el-container>
@@ -97,27 +87,29 @@
                 id_number: '12345678'
             };
             return {
-              list:null,
+                list: null,
                 tableData: Array(20).fill(item)
             }
         },
         created() {
 
         },
-      methods: {
-        getData() {
-              this.$axios.post('/competition-epidemic/sign-in',
-                  {
-                    "password": this.validateForm.password,
-                    "phoneNumber": this.validateForm.name
-                  }).then(() => {
-                    this.list=[{user_id: '0',
-                      name: '朱浙庆',
-                      unit: '安徽大学计科院',
-                      id_number: '12345678'}]
-       })
-      }
-      }
+        methods: {
+            getData() {
+                this.$axios.post('/competition-epidemic/sign-in',
+                    {
+                        "password": this.validateForm.password,
+                        "phoneNumber": this.validateForm.name
+                    }).then(() => {
+                    this.list = [{
+                        user_id: '0',
+                        name: '朱浙庆',
+                        unit: '安徽大学计科院',
+                        id_number: '12345678'
+                    }]
+                })
+            }
+        }
     };
 </script>
 

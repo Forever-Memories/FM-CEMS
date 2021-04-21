@@ -9,6 +9,7 @@ Vue.prototype.$axios = axios;
 
 import login from './view/login/login'
 import manage from './view/manage/manage'
+import testcase from "./view/manage/contant/testcase";
 
 Vue.use(ElementUI)
 
@@ -24,7 +25,14 @@ const router = new Router({
         {
             path: '/manage',
             name: 'manage',
-            component: manage
+            component: manage,
+            children: [
+                {
+                    path: 'testcase',
+                    name: 'testcase',
+                    component: testcase
+                }
+            ]
         }
     ]
 
