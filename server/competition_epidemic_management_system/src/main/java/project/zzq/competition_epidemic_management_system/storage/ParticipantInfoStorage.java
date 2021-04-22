@@ -25,9 +25,9 @@ public class ParticipantInfoStorage {
 
         participantInfoDO.setUserId(rs.getLong("user_id"));
         participantInfoDO.setName(rs.getString("name"));
-        participantInfoDO.setUnit("unit");
-        participantInfoDO.setIdNumber("id_number");
-        participantInfoDO.setComeFrom("come_from");
+        participantInfoDO.setUnit(rs.getString("unit"));
+        participantInfoDO.setIdNumber(rs.getString("id_number"));
+        participantInfoDO.setComeFrom(rs.getString("come_from"));
 
         return participantInfoDO;
     };
