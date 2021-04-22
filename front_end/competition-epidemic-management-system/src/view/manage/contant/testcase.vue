@@ -33,11 +33,7 @@
         },
         methods: {
             getData() {
-                this.$axios.post('/competition-epidemic/sign-in',
-                    {
-                        "password": this.validateForm.password,
-                        "phoneNumber": this.validateForm.name
-                    }).then(() => {
+                this.$axios.get('/competition-epidemic/participant-info/all-infos').then(() => {
                     this.list = [{
                         user_id: '0',
                         name: '朱浙庆',

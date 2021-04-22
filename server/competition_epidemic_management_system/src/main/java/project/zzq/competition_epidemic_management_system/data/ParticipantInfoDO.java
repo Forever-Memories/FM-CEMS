@@ -11,4 +11,5 @@ public class ParticipantInfoDO {
     private String name;
     private String unit;
     private String idNumber;
+    private String comeFrom;
 }
