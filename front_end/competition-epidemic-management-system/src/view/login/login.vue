@@ -7,13 +7,13 @@
                 <el-divider></el-divider>
                 <el-form :model="validateForm" ref="validateForm" label-width="100px" class="demo-ruleForm">
                     <el-form-item
-                            label="用户名"
-                            prop="name"
+                            label="账号"
+                            prop="account"
                             :rules="[
-                                { required: true, message: '用户名不能为空'},
+                                { required: true, message: '账号不能为空'},
                                 ]"
                     >
-                        <el-input type="text" v-model.number="validateForm.name" placeholder="请输入用户名"
+                        <el-input type="text" v-model.number="validateForm.account" placeholder="请输入账号"
                                   autocomplete="off"></el-input>
                     </el-form-item>
 
@@ -57,31 +57,31 @@
         data() {
             return {
                 validateForm: {
-                    name: '',
+                    account: '',
                     password: ''
                 }
             };
         },
         methods: {
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
+            submitForm(formAccount) {
+                this.$refs[formAccount].validate((valid) => {
                     if (valid) {
                         this.$axios.post('/competition-epidemic/sign-in',
                             {
                               "password": this.validateForm.password,
-                              "phoneNumber": this.validateForm.name
+                              "phoneNumber": this.validateForm.account
                             }).then(res => {
                               console.log(res)
                               if(res.data) {
-                                localStorage.setItem('userId', this.validateForm.name)
-                                this.$router.push("/manage");
+                                localStorage.setItem('userId', this.validateForm.account)
+                                this.$message.success('登陆成功')
+                                this.$router.push("/manage/people_manage");
                               } else {
-                                alert(this.validateForm.name+'登录失败');
+                                this.$message.error('登陆失败，请检查账号和密码');
                               }
                         })
                     } else {
-                        console.log('error submit!!');
-                        return false;
+                        this.$message.error('登陆失败，请检查账号和密码');
                     }
                 });
             },

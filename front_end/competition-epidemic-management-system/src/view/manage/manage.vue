@@ -28,7 +28,7 @@
                         </el-menu-item>
                         <el-submenu index="2">
                             <template slot="title"><i class="el-icon-user"></i>人员管理</template>
-                            <el-menu-item index="2-1">
+                            <el-menu-item index="/manage/people_manage">
                                 <template slot="title"><i class="el-icon-user"></i>人员管理</template>
                             </el-menu-item>
                             <el-menu-item index="2-2">
@@ -91,25 +91,6 @@
                 tableData: Array(20).fill(item)
             }
         },
-        created() {
-
-        },
-        methods: {
-            getData() {
-                this.$axios.post('/competition-epidemic/sign-in',
-                    {
-                        "password": this.validateForm.password,
-                        "phoneNumber": this.validateForm.name
-                    }).then(() => {
-                    this.list = [{
-                        user_id: '0',
-                        name: '朱浙庆',
-                        unit: '安徽大学计科院',
-                        id_number: '12345678'
-                    }]
-                })
-            }
-        }
     };
 </script>
 

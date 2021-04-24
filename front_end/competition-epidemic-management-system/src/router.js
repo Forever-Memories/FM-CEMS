@@ -10,6 +10,7 @@ Vue.prototype.$axios = axios;
 import login from './view/login/login'
 import manage from './view/manage/manage'
 import testcase from "./view/manage/contant/testcase";
+import people_manage from "./view/manage/contant/people-manage/people-manage"
 
 Vue.use(ElementUI)
 
@@ -31,6 +32,11 @@ const router = new Router({
                     path: 'testcase',
                     name: 'testcase',
                     component: testcase
+                },
+                {
+                    path: 'people_manage',
+                    name: 'people_manage',
+                    component: people_manage
                 }
             ]
         }
