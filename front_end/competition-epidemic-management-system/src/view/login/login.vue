@@ -62,6 +62,12 @@
                 }
             };
         },
+        created() {
+
+            if (localStorage.getItem('userId') == null) {
+                localStorage.setItem('userId','0');
+            }
+        },
         methods: {
             submitForm(formAccount) {
                 this.$refs[formAccount].validate((valid) => {

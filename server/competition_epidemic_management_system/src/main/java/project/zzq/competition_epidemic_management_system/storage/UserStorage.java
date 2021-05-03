@@ -74,4 +74,14 @@ public class UserStorage {
         }
     }
 
+    public Optional<UserDO> getUserByUserId(Long userId) {
+        String sql = "SELECT "+ALL_COLUMNS+"FROM `user` WHERE `id` =:userId";
+
+        try {
+            return Optional.of(db.queryForObject(sql, ImmutableMap.of("userId", userId), ROW_MAPPER));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
 }

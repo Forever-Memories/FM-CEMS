@@ -31,7 +31,7 @@
                             <el-menu-item index="/manage/people_manage">
                                 <template slot="title"><i class="el-icon-user"></i>人员管理</template>
                             </el-menu-item>
-                            <el-menu-item index="2-2">
+                            <el-menu-item index="/manage/healthy">
                                 <template slot="title"><i class="el-icon-upload"></i>健康信息上报</template>
                             </el-menu-item>
                         </el-submenu>
@@ -44,26 +44,17 @@
                                 <template slot="title"><i class="el-icon-s-check"></i>权限组</template>
                             </el-menu-item>
                         </el-submenu>
-                        <el-menu-item index="4">
+                        <el-menu-item index="/manage/competition">
                             <i class="el-icon-s-help"></i>
                             <span slot="title">赛事管理</span>
                         </el-menu-item>
                         <el-submenu index="5">
                             <template slot="title"><i class="el-icon-date"></i>参赛活动管理</template>
-                            <el-menu-item index="5-1">
+                            <el-menu-item index="/manage/bus">
                                 <template slot="title"><i class="el-icon-position"></i>班车安排</template>
                             </el-menu-item>
-                            <el-menu-item index="5-2">
-                                <template slot="title"><i class="el-icon-s-claim"></i>入场记录</template>
-                            </el-menu-item>
-                        </el-submenu>
-                        <el-submenu index="6">
-                            <template slot="title"><i class="el-icon-s-operation"></i>系统管理</template>
-                            <el-menu-item index="6-1">
-                                <template slot="title"><i class="el-icon-setting"></i>系统设置</template>
-                            </el-menu-item>
-                            <el-menu-item index="6-2">
-                                <template slot="title"><i class="el-icon-s-management"></i>系统日志</template>
+                            <el-menu-item index="/manage/registry">
+                                <template slot="title"><i class="el-icon-s-claim"></i>报名信息</template>
                             </el-menu-item>
                         </el-submenu>
                     </el-menu>

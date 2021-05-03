@@ -9,8 +9,9 @@ import java.util.Optional;
 public enum UserType {
 
     PARTICIPANT(1, "参赛人员"),
-    ADMINISTRATOR(2, "管理员"),
-    SUPER_ADMINISTRATOR(3, "超级管理员")
+    ORGANIZER(2,"组织人员"),
+    ADMINISTRATOR(3, "管理员"),
+    SUPER_ADMINISTRATOR(4, "超级管理员")
     ;
 
     private int value;

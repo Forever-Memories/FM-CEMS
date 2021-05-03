@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project.zzq.competition_epidemic_management_system.constant.CompetitionEpidemicManagementSystemConstant;
 import project.zzq.competition_epidemic_management_system.data.ParticipantInfoDO;
+import project.zzq.competition_epidemic_management_system.web.data.ParticipantCreateParam;
+import project.zzq.competition_epidemic_management_system.web.data.ParticipantInfoVO;
 import project.zzq.competition_epidemic_management_system.web.logic.ParticipantInfoLogic;
 
 import java.util.List;
@@ -15,17 +17,17 @@ public class ParticipantInfoController {
     private ParticipantInfoLogic participantInfoLogic;
 
     @PostMapping("/participant-info/create")
-    public void create(@RequestBody ParticipantInfoDO participantInfoDO) {
-        participantInfoLogic.create(participantInfoDO);
+    public void create(@RequestBody ParticipantCreateParam participantCreateParam) {
+        participantInfoLogic.create(participantCreateParam);
     }
 
     @GetMapping("/participant-info/infos")
-    public List<ParticipantInfoDO> getParticipantInfoByUserIds(@RequestParam List<Long> userIds) {
+    public List<ParticipantInfoVO> getParticipantInfoByUserIds(@RequestParam List<Long> userIds) {
         return participantInfoLogic.getParticipantInfoByUserIds(userIds);
     }
 
     @GetMapping("/participant-info/all-infos")
-    public List<ParticipantInfoDO> getAllParticipantInfo() {
+    public List<ParticipantInfoVO> getAllParticipantInfo() {
         return participantInfoLogic.getAllParticipantInfo();
     }
 }
