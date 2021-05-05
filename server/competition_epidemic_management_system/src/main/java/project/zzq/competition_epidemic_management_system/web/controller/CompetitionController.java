@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project.zzq.competition_epidemic_management_system.constant.CompetitionEpidemicManagementSystemConstant;
 import project.zzq.competition_epidemic_management_system.data.CompetitionInfoDO;
+import project.zzq.competition_epidemic_management_system.data.PlaceInfoDO;
 import project.zzq.competition_epidemic_management_system.web.data.CompetitionVO;
 import project.zzq.competition_epidemic_management_system.web.logic.CompetitionLogic;
 
@@ -31,7 +32,7 @@ public class CompetitionController {
     }
 
     @GetMapping("/competition/all-place")
-    public List<String> getAllPlace() {
+    public List<PlaceInfoDO> getAllPlace() {
         return competitionLogic.getAllPlace();
     }
 }

@@ -8,6 +8,7 @@ import project.zzq.competition_epidemic_management_system.service.CompetitionSer
 import project.zzq.competition_epidemic_management_system.web.data.CompetitionVO;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,8 +26,8 @@ public class CompetitionLogic {
         competitionService.createPlace(placeName);
     }
 
-    public List<String> getAllPlace() {
-        return competitionService.getAllPlace().stream().map(PlaceInfoDO::getName).collect(Collectors.toList());
+    public List<PlaceInfoDO> getAllPlace() {
+        return competitionService.getAllPlace().stream().sorted(Comparator.comparingLong(PlaceInfoDO::getId)).collect(Collectors.toList());
     }
 
     public List<CompetitionVO> getAllCompetition() {

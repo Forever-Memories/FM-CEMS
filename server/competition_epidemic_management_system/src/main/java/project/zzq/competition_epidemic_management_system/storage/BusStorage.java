@@ -1,5 +1,6 @@
 package project.zzq.competition_epidemic_management_system.storage;
 
+import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -47,5 +48,9 @@ public class BusStorage {
         String sql = "SELECT " + ALL_COLUMNS + "FROM `bus`";
 
         return db.query(sql, ROW_MAPPER);
+    }
+
+    public void deleteById(Long busId) {
+        db.update("DELETE FROM bus WHERE id = :id", ImmutableMap.of("id", busId));
     }
 }

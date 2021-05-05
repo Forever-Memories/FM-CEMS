@@ -6,6 +6,7 @@ import project.zzq.competition_epidemic_management_system.constant.CompetitionEp
 import project.zzq.competition_epidemic_management_system.data.ParticipantInfoDO;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantCreateParam;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantInfoVO;
+import project.zzq.competition_epidemic_management_system.web.data.SearchParticipantParam;
 import project.zzq.competition_epidemic_management_system.web.logic.ParticipantInfoLogic;
 
 import java.util.List;
@@ -30,4 +31,10 @@ public class ParticipantInfoController {
     public List<ParticipantInfoVO> getAllParticipantInfo() {
         return participantInfoLogic.getAllParticipantInfo();
     }
+
+    @GetMapping("/participant-info/search")
+    public List<ParticipantInfoVO> searchParticipantInfo(SearchParticipantParam searchParticipantParam) {
+        return participantInfoLogic.searchParticipant(searchParticipantParam);
+    }
+
 }

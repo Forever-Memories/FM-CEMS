@@ -19,4 +19,8 @@ public class BusService {
     public List<BusDO> getAllBus() {
         return busStorage.getAllBus();
     }
+
+    public void deleteById(Long busId) {
+        busStorage.deleteById(busId);
+    }
 }

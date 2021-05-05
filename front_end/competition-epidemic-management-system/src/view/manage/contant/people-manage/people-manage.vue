@@ -10,7 +10,43 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
-                <el-button type="primary" @click="onSubmit" plain>新增人员信息</el-button>
+                <el-button type="primary" @click="handleCreate" plain>新增人员信息</el-button>
+                <el-dialog
+                        title="新增人员信息"
+                        :visible.sync="dialogCreateFormVisible"
+                        width="50%">
+                    <el-form ref="form" :model="createFrom" label-width="120px" size="mini" label-position="left">
+                        <el-form-item label="姓名">
+                            <el-input v-model="createFrom.participantInfoDO.name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="所属单位">
+                            <el-input v-model="createFrom.participantInfoDO.unit"></el-input>
+                        </el-form-item>
+                        <el-form-item label="身份证号">
+                            <el-input v-model="createFrom.participantInfoDO.idNumber"></el-input>
+                        </el-form-item>
+                        <el-form-item label="来源地">
+                            <el-input v-model="createFrom.participantInfoDO.comeFrom"></el-input>
+                        </el-form-item>
+                        <el-form-item label="身份类型">
+                            <el-select v-model="createFrom.userDO.type" clearable placeholder="请选择">
+                                <el-option
+                                        v-for="item in typeList" :key="item" :label="item" :value="item">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="联系号码">
+                            <el-input v-model="createFrom.userDO.phoneNumber"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码">
+                            <el-input v-model="createFrom.userDO.password"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="createPeople">确 定</el-button>
+  </span>
+                </el-dialog>
             </el-form-item>
         </el-form>
         <el-table :data="list">
@@ -44,9 +80,24 @@
         data() {
             return {
                 list: null,
+                typeList: ["参赛人员","组织人员"],
                 formInline: {
                     unit: '',
                     peopleName: ''
+                },
+                dialogCreateFormVisible: false,
+                createFrom: {
+                    "participantInfoDO": {
+                        "comeFrom": "",
+                        "idNumber": "",
+                        "name": "",
+                        "unit": "",
+                    },
+                    "userDO": {
+                        "password": "",
+                        "phoneNumber": "",
+                        "type": "参赛人员"
+                    }
                 }
             }
         },
@@ -62,6 +113,26 @@
             },
             onSubmit() {
                 console.log('submit!');
+            },
+            handleCreate() {
+                this.createFrom = {
+                    "participantInfoDO": {
+                        "comeFrom": "",
+                        "idNumber": "",
+                        "name": "",
+                        "unit": "",
+                    },
+                    "userDO": {
+                        "password": "",
+                        "phoneNumber": "",
+                        "type": "参赛人员"
+                    }
+                };
+                this.dialogCreateFormVisible = true;
+            },
+            createPeople() {
+
+                this.dialogCreateFormVisible = false;
             }
         }
     }

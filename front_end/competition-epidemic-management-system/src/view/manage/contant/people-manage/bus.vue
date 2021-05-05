@@ -5,7 +5,7 @@
                 title="创建班车安排"
                 :visible.sync="dialogCreateFormVisible"
                 width="30%">
-            <el-form ref="form" :model="createFrom" label-width="80px" size="mini">
+            <el-form ref="createFrom" :model="createFrom" label-width="80px" size="mini" label-position="left">
                 <el-form-item label="地点">
                     <el-input v-model="createFrom.placeName"></el-input>
                 </el-form-item>
@@ -21,7 +21,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
     <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="createBus">确 定</el-button>
+    <el-button type="primary" @click="createBus('createFrom')">确 定</el-button>
   </span>
         </el-dialog>
         <el-table :data="list">
@@ -41,7 +41,16 @@
                     width="200">
                 <template slot-scope="scope">
                     <el-button  @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                    <el-button type="danger" size="small">删除</el-button>
+                    <el-popover
+                            placement="top"
+                            width="160"
+                            ref="deleteBusVisible">
+                        <p>确定删除该班车安排吗？</p>
+                        <div style="text-align: right; margin: 0">
+                            <el-button type="danger" size="mini" @click="deleteBusById(scope.row.id)" >确定</el-button>
+                        </div>
+                    <el-button slot="reference" @click="deleteBusVisible = true" type="danger" size="small">删除</el-button>
+                    </el-popover>
                 </template>
             </el-table-column>
         </el-table>
@@ -55,6 +64,7 @@
             return {
                 list: null,
                 dialogCreateFormVisible: false,
+                deleteBusVisible: false,
                 createFrom: {
                     "arrangement": "",
                     "comment": "",
@@ -82,9 +92,34 @@
                 };
                 this.dialogCreateFormVisible = true;
             },
-            createBus() {
-
+            createBus(formBus) {
+                this.$refs[formBus].validate((valid) => {
+                    if (valid) {
+                        this.$axios.post('/competition-epidemic/bus/create',
+                            {
+                                "arrangement": this.createFrom.arrangement,
+                                "comment": this.createFrom.comment,
+                                "placeName": this.createFrom.placeName,
+                                "time": this.createFrom.time
+                            })
+                    } else {
+                        this.$message.error('创建班车安排失败');
+                    }
+                });
                 this.dialogCreateFormVisible = false;
+                location.reload();
+            },
+            deleteBusById(busId) {
+                console.log(busId)
+                this.$axios.post('/competition-epidemic/bus/delete',
+                    {
+                        "busId": busId
+                    })
+                this.deleteBusVisible = false;
+                location.reload();
+            },
+            handleClick(row) {
+                console.log(row)
             }
         }
     }

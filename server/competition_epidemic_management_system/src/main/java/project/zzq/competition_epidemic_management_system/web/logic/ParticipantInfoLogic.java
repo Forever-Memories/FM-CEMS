@@ -8,6 +8,7 @@ import project.zzq.competition_epidemic_management_system.service.ParticipantInf
 import project.zzq.competition_epidemic_management_system.service.UserService;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantCreateParam;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantInfoVO;
+import project.zzq.competition_epidemic_management_system.web.data.SearchParticipantParam;
 
 import java.util.Comparator;
 import java.util.List;
@@ -36,6 +37,19 @@ public class ParticipantInfoLogic {
 
     public List<ParticipantInfoVO> getAllParticipantInfo() {
         return participantInfoService.getAllParticipantInfo().stream().map(this::participantInfoDO2VO).sorted(Comparator.comparingLong(ParticipantInfoVO::getUserId)).collect(Collectors.toList());
+    }
+
+    public List<ParticipantInfoVO> searchParticipant(SearchParticipantParam searchParticipantParam) {
+        List<ParticipantInfoVO> allParticipant = getAllParticipantInfo();
+        if(searchParticipantParam.getName() != null) {
+            allParticipant = allParticipant.stream().filter(o -> o.getName().equals(searchParticipantParam.getName())).collect(Collectors.toList());
+        }
+
+        if(searchParticipantParam.getUnit() != null) {
+            allParticipant = allParticipant.stream().filter(o -> o.getUnit().equals(searchParticipantParam.getUnit())).collect(Collectors.toList());
+        }
+
+        return allParticipant;
     }
 
     private ParticipantInfoVO participantInfoDO2VO(ParticipantInfoDO participantInfoDO) {

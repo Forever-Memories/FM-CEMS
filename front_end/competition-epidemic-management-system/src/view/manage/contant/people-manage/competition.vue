@@ -13,7 +13,51 @@
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
                 <el-button type="primary" @click="handleCreateCompetition" plain>新增赛项</el-button>
+                <el-dialog
+                        title="新增赛项"
+                        :visible.sync="dialogCreateCompetitionVisible"
+                        width="100%">
+                    <el-form ref="form" :model="createCompetitionFrom" label-width="80px" size="mini">
+                        <el-form-item label="赛项名">
+                            <el-input v-model="createCompetitionFrom.name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="场地">
+                            <el-select v-model="createCompetitionFrom.placeId" placeholder="请选择场地">
+                                <el-option
+                                        v-for="item in placeList"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="开始时间">
+                            <el-date-picker type="datetime" placeholder="选择赛项开始时间" v-model="createCompetitionFrom.startTime" value-formate="timestamp" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                        <el-form-item label="结束时间">
+                            <el-date-picker type="datetime" placeholder="选择赛项结束时间" v-model="createCompetitionFrom.endTime" value-formate="timestamp" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-form>
+                    <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogCreateCompetitionVisible = false">取 消</el-button>
+    <el-button type="primary" @click="createCompetition">确 定</el-button>
+  </span>
+                </el-dialog>
                 <el-button type="primary" @click="handleCreatePlace" plain>新增场地</el-button>
+                <el-dialog
+                        title="新增场地"
+                        :visible.sync="dialogCreatePlaceVisible"
+                        width="30%">
+                    <el-form ref="form" :model="createPlaceFrom" label-width="80px" size="mini">
+                        <el-form-item label="赛场名">
+                            <el-input v-model="createPlaceFrom.placeName"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogCreatePlaceVisible = false">取 消</el-button>
+    <el-button type="primary" @click="createPlace">确 定</el-button>
+  </span>
+                </el-dialog>
             </el-form-item>
         </el-form>
         <el-table :data="competitionList">
@@ -32,7 +76,7 @@
                     label="操作"
                     width="200">
                 <template slot-scope="scope">
-                    <el-button  @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+                    <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
                     <el-button type="danger" size="small">删除</el-button>
                 </template>
             </el-table-column>
@@ -59,13 +103,14 @@
                 createCompetitionFrom: {
                     "endTime": new Date().getTime(),
                     "name": "",
-                    "placeId": 0,
+                    "placeId": null,
                     "startTime": new Date().getTime()
                 }
             }
         },
         created() {
             this.getAllCompetition();
+            this.getAllPlaceList();
         },
         methods: {
             getAllCompetition() {
@@ -87,18 +132,23 @@
                 this.createPlaceFrom = {
                     "placeName": ""
                 };
-                this.createPlaceFrom = true;
+                this.dialogCreatePlaceVisible = true;
             },
             createPlace() {
-                this.createPlaceFrom = false;
+                this.dialogCreatePlaceVisible = false;
+                this.getAllPlaceList();
             },
             handleCreateCompetition() {
                 this.createCompetitionFrom = {
                     "endTime": new Date().getTime(),
-                        "name": "",
-                        "placeId": 0,
-                        "startTime": new Date().getTime()
+                    "name": "",
+                    "placeId": null,
+                    "startTime": new Date().getTime()
                 }
+                this.dialogCreateCompetitionVisible = true;
+            },
+            createCompetition() {
+                this.dialogCreateCompetitionVisible = false;
             }
         }
     }

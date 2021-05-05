@@ -23,6 +23,10 @@ public class BusLogic {
         return busService.getAllBus().stream().map(this::do2VO).collect(Collectors.toList());
     }
 
+    public void deleteById(Long userId) {
+        busService.deleteById(userId);
+    }
+
     private BusVO do2VO(BusDO busDO) {
         BusVO busVO = new BusVO();
         SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm");
