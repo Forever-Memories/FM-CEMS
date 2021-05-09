@@ -1,5 +1,7 @@
 package project.zzq.competition_epidemic_management_system.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Optional;
 
 /**
@@ -43,6 +45,10 @@ public enum UserType {
         return Optional.empty();
     }
 
+    @JsonCreator
+    public static UserType forValue(String value) {
+        return findByString(value).get();
+    }
 
     @Override
     public String toString() {

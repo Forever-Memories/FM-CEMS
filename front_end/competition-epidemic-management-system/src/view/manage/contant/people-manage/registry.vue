@@ -55,6 +55,7 @@
 <script>
     export default {
         name: "registry",
+        inject: ['reload'],
         data() {
             return {
                 list: null,

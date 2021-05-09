@@ -6,13 +6,13 @@
                 </el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">查询</el-button>
+                <el-button type="primary" @click="searchHealthy()">查询</el-button>
                 <el-button type="primary" @click="handleCreate" plain>新增健康信息</el-button>
                 <el-dialog
                         title="新增健康信息"
                         :visible.sync="dialogCreateFormVisible"
                         width="50%">
-                    <el-form ref="form" :model="createFrom" label-width="120px" size="mini" label-position="left">
+                    <el-form ref="createFrom" :model="createFrom" label-width="120px" size="mini" label-position="left">
                         <el-form-item label="人员id">
                             <el-input v-model="createFrom.userId"></el-input>
                         </el-form-item>
@@ -52,7 +52,7 @@
                     </el-form>
                     <span slot="footer" class="dialog-footer">
     <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="createRegistry">确 定</el-button>
+    <el-button type="primary" @click="createRegistry('createFrom')">确 定</el-button>
   </span>
                 </el-dialog>
             </el-form-item>
@@ -75,8 +75,16 @@
                     label="操作"
                     width="180">
                 <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                    <el-button type="danger" size="small">删除</el-button>
+                    <el-popover
+                            placement="top"
+                            width="160"
+                            ref="deleteHealthyVisible">
+                        <p>确定删除该条健康上报记录安排吗？</p>
+                        <div style="text-align: right; margin: 0">
+                            <el-button type="danger" size="mini" @click="deleteHealthyById(scope.row.id)" >确定</el-button>
+                        </div>
+                    <el-button slot="reference" @click="deleteHealthyVisible = true" type="danger" size="small">删除</el-button>
+                    </el-popover>
                 </template>
             </el-table-column>
         </el-table>
@@ -86,6 +94,7 @@
 <script>
     export default {
         name: "healthy",
+        inject: ['reload'],
         data() {
             return {
                 list: null,
@@ -100,6 +109,7 @@
                     peopleName: ''
                 },
                 dialogCreateFormVisible: false,
+                deleteHealthyVisible : false,
                 createFrom: {
                     "isCough": null,
                     "isHistory": null,
@@ -120,6 +130,15 @@
                     this.list = res.data
                 })
             },
+            searchHealthy() {
+                console.log(this.formInline)
+                this.$axios.post('/competition-epidemic/healthy-info/search',
+                    {
+                        name: this.formInline.peopleName
+                    }).then((res) => {
+                    this.list = res.data
+                });
+            },
             onSubmit() {
                 console.log('submit!');
             },
@@ -134,10 +153,36 @@
                 };
                 this.dialogCreateFormVisible = true;
             },
-            createRegistry() {
-
+            createRegistry(formHealthy) {
+                this.$refs[formHealthy].validate((valid) => {
+                    if (valid) {
+                        this.$axios.post('/competition-epidemic/healthy-info/create',
+                            {
+                                "isCough": this.createFrom.isCough,
+                                "isHistory": this.createFrom.isHistory,
+                                "isTouch": this.createFrom.isTouch,
+                                "temperature": this.createFrom.temperature,
+                                "time": this.createFrom.time,
+                                "userId": this.createFrom.userId
+                            }
+                        )
+                    } else {
+                        this.$message.error('上报健康信息失败');
+                    }
+                });
                 this.dialogCreateFormVisible = false;
-            }
+                this.reload();
+            },
+            deleteHealthyById(healthyId) {
+                console.log('healthyId: ')
+                console.log(healthyId)
+                this.$axios.post('/competition-epidemic/healthy-info/delete',
+                    {
+                        "id": healthyId
+                    })
+                this.deleteHealthyVisible = false;
+                this.reload();
+            },
         }
     }
 </script>

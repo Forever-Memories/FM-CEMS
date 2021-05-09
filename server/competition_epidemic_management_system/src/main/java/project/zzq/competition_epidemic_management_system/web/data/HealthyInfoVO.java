@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class HealthyInfoVO {
+    private Long id;
     private String userName;
     private Double temperature;
     private String isCough;

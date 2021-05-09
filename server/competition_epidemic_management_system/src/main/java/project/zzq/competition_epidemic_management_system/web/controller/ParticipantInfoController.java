@@ -32,9 +32,14 @@ public class ParticipantInfoController {
         return participantInfoLogic.getAllParticipantInfo();
     }
 
-    @GetMapping("/participant-info/search")
-    public List<ParticipantInfoVO> searchParticipantInfo(SearchParticipantParam searchParticipantParam) {
+    @PostMapping("/participant-info/search")
+    public List<ParticipantInfoVO> searchParticipantInfo(@RequestBody SearchParticipantParam searchParticipantParam) {
         return participantInfoLogic.searchParticipant(searchParticipantParam);
+    }
+
+    @PostMapping("/participant-info/edit")
+    public void edit(@RequestBody ParticipantInfoDO participantInfoDO) {
+        participantInfoLogic.edit(participantInfoDO);
     }
 
 }

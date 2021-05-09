@@ -35,15 +35,6 @@
                                 <template slot="title"><i class="el-icon-upload"></i>健康信息上报</template>
                             </el-menu-item>
                         </el-submenu>
-                        <el-submenu index="3">
-                            <template slot="title"><i class="el-icon-s-custom"></i>管理员</template>
-                            <el-menu-item index="3-1">
-                                <template slot="title"><i class="el-icon-user-solid"></i>管理员信息</template>
-                            </el-menu-item>
-                            <el-menu-item index="3-2">
-                                <template slot="title"><i class="el-icon-s-check"></i>权限组</template>
-                            </el-menu-item>
-                        </el-submenu>
                         <el-menu-item index="/manage/competition">
                             <i class="el-icon-s-help"></i>
                             <span slot="title">赛事管理</span>

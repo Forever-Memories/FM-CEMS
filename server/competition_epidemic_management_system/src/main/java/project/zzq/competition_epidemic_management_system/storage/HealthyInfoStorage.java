@@ -1,5 +1,7 @@
 package project.zzq.competition_epidemic_management_system.storage;
 
+import com.google.common.collect.ImmutableMap;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,8 +13,9 @@ import project.zzq.competition_epidemic_management_system.data.HealthyInfoDO;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class HealthyInfoStorage {
-    private final String ALL_COLUMNS = "`id`, `user_id`, `temperature`, `is_cough`, `is_history`, `is_touch`, `time`";
+    private final String ALL_COLUMNS = "`id`, `user_id`, `temperature`, `is_cough`, `is_history`, `is_touch`, `time` ";
 
     private static final RowMapper<HealthyInfoDO> ROW_MAPPER = (rs, rowNum) -> {
         HealthyInfoDO healthyInfoDO = new HealthyInfoDO();
@@ -52,4 +55,17 @@ public class HealthyInfoStorage {
         return db.query(sql, ROW_MAPPER);
     }
 
+    public List<HealthyInfoDO> searchHealthyByUserIds(List<Long> userIds) {
+        log.info(userIds.toString());
+        String sql = "SELECT " + ALL_COLUMNS + "FROM healthyInfo WHERE user_id IN (:userIds)";
+        log.info(sql);
+        return db.query(sql, ImmutableMap.of("userIds",  userIds), ROW_MAPPER);
+
+    }
+
+    public void deleteById(Long id) {
+        String sql = "DELETE FROM healthyInfo WHERE id = :id";
+
+        db.update(sql, ImmutableMap.of("id", id));
+    }
 }

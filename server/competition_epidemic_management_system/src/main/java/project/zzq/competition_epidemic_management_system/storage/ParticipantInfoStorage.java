@@ -49,10 +49,34 @@ public class ParticipantInfoStorage {
         db.update(sql, source);
     }
 
+    public void edit(ParticipantInfoDO participantInfoDO) {
+        SqlParameterSource source = new MapSqlParameterSource()
+                .addValue("user_id", participantInfoDO.getUserId())
+                .addValue("name", participantInfoDO.getName())
+                .addValue("unit", participantInfoDO.getUnit())
+                .addValue("id_number", participantInfoDO.getIdNumber())
+                .addValue("come_from", participantInfoDO.getComeFrom());
+
+        String sql = "UPDATE `participants_info` SET " +
+                "name = :name," +
+                "unit = :unit," +
+                "id_number = :id_number," +
+                "come_from = :come_from " +
+                "WHERE user_id = :user_id";
+
+        db.update(sql, source);
+    }
+
     public List<ParticipantInfoDO> getParticipantInfoByUserIds(List<Long> userIds) {
         String sql = "SELECT " + ALL_COLUMNS + "FROM participants_info WHERE user_id IN (:userIds)";
 
         return db.query(sql, ImmutableMap.of("userIds", userIds), ROW_MAPPER);
+    }
+
+    public List<ParticipantInfoDO> getParticipantInfoByUserName(String name) {
+        String sql = "SELECT " + ALL_COLUMNS + "FROM participants_info WHERE name = :name";
+
+        return db.query(sql, ImmutableMap.of("name", name), ROW_MAPPER);
     }
 
     public List<ParticipantInfoDO> getAllParticipantInfo() {

@@ -60,6 +60,7 @@
 <script>
     export default {
         name: "bus",
+        inject: ['reload'],
         data() {
             return {
                 list: null,
@@ -107,7 +108,7 @@
                     }
                 });
                 this.dialogCreateFormVisible = false;
-                location.reload();
+                this.reload();
             },
             deleteBusById(busId) {
                 console.log(busId)
@@ -116,7 +117,7 @@
                         "busId": busId
                     })
                 this.deleteBusVisible = false;
-                location.reload();
+                this.reload();
             },
             handleClick(row) {
                 console.log(row)

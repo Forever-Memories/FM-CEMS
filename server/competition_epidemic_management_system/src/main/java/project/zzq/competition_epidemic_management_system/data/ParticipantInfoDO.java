@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class ParticipantInfoDO {
+    private Long id;
     private Long userId;
     private String name;
     private String unit;

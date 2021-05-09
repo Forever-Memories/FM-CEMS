@@ -19,4 +19,12 @@ public class HealthyInfoService {
     public List<HealthyInfoDO> getAllHealthyInfo() {
         return healthyInfoStorage.getAllHealthyInfo();
     }
+
+    public List<HealthyInfoDO> searchHealthyByUserIds(List<Long> userIds) {
+        return healthyInfoStorage.searchHealthyByUserIds(userIds);
+    }
+
+    public void deleteById(Long id) {
+        healthyInfoStorage.deleteById(id);
+    }
 }

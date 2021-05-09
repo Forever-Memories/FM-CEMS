@@ -9,6 +9,7 @@ import project.zzq.competition_epidemic_management_system.service.CompetitionSer
 import project.zzq.competition_epidemic_management_system.service.ParticipantInfoService;
 import project.zzq.competition_epidemic_management_system.service.RegistryService;
 import project.zzq.competition_epidemic_management_system.web.data.RegistryVO;
+import project.zzq.competition_epidemic_management_system.web.data.SearchRegistryParam;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -33,6 +34,19 @@ public class RegistryLogic {
 
     public List<RegistryVO> getAllRegistry() {
         return registryService.getAllRegistry().stream().map(this::do2VO).collect(Collectors.toList());
+    }
+
+    public List<RegistryVO> searchRegistry(SearchRegistryParam searchRegistryParam) {
+        List<RegistryVO> allRegistry = getAllRegistry();
+        if (searchRegistryParam.getCompetitionName() != null) {
+            allRegistry = allRegistry.stream().filter(o -> o.getCompetitionName().equals(searchRegistryParam.getCompetitionName())).collect(Collectors.toList());
+        }
+
+        if (searchRegistryParam.getParticipantName() != null) {
+            allRegistry = allRegistry.stream().filter(o -> o.getUserName().equals(searchRegistryParam.getParticipantName())).collect(Collectors.toList());
+        }
+
+        return allRegistry;
     }
 
     private RegistryVO do2VO(RegistryDO registryDO) {

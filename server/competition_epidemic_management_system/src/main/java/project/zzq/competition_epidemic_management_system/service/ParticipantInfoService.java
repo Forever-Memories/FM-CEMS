@@ -20,7 +20,15 @@ public class ParticipantInfoService {
         return participantInfoStorage.getParticipantInfoByUserIds(userIds);
     }
 
+    public List<ParticipantInfoDO> getParticipantInfoByUserName(String name) {
+        return participantInfoStorage.getParticipantInfoByUserName(name);
+    }
+
     public List<ParticipantInfoDO> getAllParticipantInfo() {
         return participantInfoStorage.getAllParticipantInfo();
+    }
+
+    public void edit(ParticipantInfoDO participantInfoDO) {
+        participantInfoStorage.edit(participantInfoDO);
     }
 }

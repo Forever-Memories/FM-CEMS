@@ -6,6 +6,7 @@ import project.zzq.competition_epidemic_management_system.constant.CompetitionEp
 import project.zzq.competition_epidemic_management_system.data.CompetitionInfoDO;
 import project.zzq.competition_epidemic_management_system.data.PlaceInfoDO;
 import project.zzq.competition_epidemic_management_system.web.data.CompetitionVO;
+import project.zzq.competition_epidemic_management_system.web.data.SearchCompetitionParam;
 import project.zzq.competition_epidemic_management_system.web.logic.CompetitionLogic;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class CompetitionController {
     }
 
     @PostMapping("/competition/create-place")
-    public void createPlace(@RequestBody String placeName) {
-        competitionLogic.createPlace(placeName);
+    public void createPlace(@RequestBody PlaceInfoDO placeInfoDO) {
+        competitionLogic.createPlace(placeInfoDO.getName());
     }
 
     @GetMapping("/competition/all-competition")
@@ -34,5 +35,10 @@ public class CompetitionController {
     @GetMapping("/competition/all-place")
     public List<PlaceInfoDO> getAllPlace() {
         return competitionLogic.getAllPlace();
+    }
+
+    @PostMapping("/competition/search")
+    public List<CompetitionVO> searchCompetition(@RequestBody SearchCompetitionParam searchCompetitionParam) {
+        return competitionLogic.searchCompetition(searchCompetitionParam);
     }
 }

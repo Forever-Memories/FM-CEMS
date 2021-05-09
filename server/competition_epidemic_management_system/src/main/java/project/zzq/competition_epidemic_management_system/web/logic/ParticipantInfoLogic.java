@@ -2,6 +2,7 @@ package project.zzq.competition_epidemic_management_system.web.logic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import project.zzq.competition_epidemic_management_system.data.ParticipantInfoDO;
 import project.zzq.competition_epidemic_management_system.data.UserDO;
 import project.zzq.competition_epidemic_management_system.service.ParticipantInfoService;
@@ -41,15 +42,19 @@ public class ParticipantInfoLogic {
 
     public List<ParticipantInfoVO> searchParticipant(SearchParticipantParam searchParticipantParam) {
         List<ParticipantInfoVO> allParticipant = getAllParticipantInfo();
-        if(searchParticipantParam.getName() != null) {
+        if(!StringUtils.isEmpty(searchParticipantParam.getName())) {
             allParticipant = allParticipant.stream().filter(o -> o.getName().equals(searchParticipantParam.getName())).collect(Collectors.toList());
         }
 
-        if(searchParticipantParam.getUnit() != null) {
+        if(!StringUtils.isEmpty(searchParticipantParam.getUnit())) {
             allParticipant = allParticipant.stream().filter(o -> o.getUnit().equals(searchParticipantParam.getUnit())).collect(Collectors.toList());
         }
 
         return allParticipant;
+    }
+
+    public void edit(ParticipantInfoDO participantInfoDO) {
+        participantInfoService.edit(participantInfoDO);
     }
 
     private ParticipantInfoVO participantInfoDO2VO(ParticipantInfoDO participantInfoDO) {
