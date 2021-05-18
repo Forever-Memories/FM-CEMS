@@ -70,6 +70,8 @@
         methods: {
             handleQuit() {
                 localStorage.setItem('userId', '0')
+                localStorage.setItem('userType', null);
+                localStorage.setItem('name', null)
                 this.$router.push("/login");
             }
         }
