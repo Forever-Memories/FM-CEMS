@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class CompetitionVO {
     private Long id;
+    private Long placeId;
     private String name;
     private String placeName;
     private String startTime;

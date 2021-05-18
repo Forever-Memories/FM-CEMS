@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import project.zzq.competition_epidemic_management_system.data.CompetitionInfoDO;
 
 import java.lang.management.OperatingSystemMXBean;
@@ -42,6 +43,23 @@ public class CompetitionInfoStorage {
 
         String sql = "INSERT INTO competition_info (`name`, `start_time`, `end_time`, `place_id`) " +
                 "VALUES (:name, :start_time, :end_time, :place_id)";
+
+        db.update(sql, source);
+    }
+
+    public void edit(CompetitionInfoDO competitionInfoDO) {
+        SqlParameterSource source = new MapSqlParameterSource()
+                .addValue("name", competitionInfoDO.getName())
+                .addValue("start_time", competitionInfoDO.getStartTime())
+                .addValue("end_time", competitionInfoDO.getEndTime())
+                .addValue("place_id", competitionInfoDO.getPlaceId())
+                .addValue("id", competitionInfoDO.getId());
+
+        String sql = "UPDATE competition_info SET name = :name," +
+                "start_time = :start_time," +
+                "end_time = :end_time," +
+                "place_id = :place_id " +
+                "WHERE id = :id";
 
         db.update(sql, source);
     }

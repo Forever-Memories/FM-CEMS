@@ -78,8 +78,10 @@
                               "phoneNumber": this.validateForm.account
                             }).then(res => {
                               console.log(res)
-                              if(res.data) {
-                                localStorage.setItem('userId', this.validateForm.account)
+                              if(res.data.result) {
+                                localStorage.setItem('userId', this.validateForm.account);
+                                localStorage.setItem('userType', res.data.userType);
+                                localStorage.setItem('name', res.data.name)
                                 this.$message.success('登陆成功')
                                 this.$router.push("/manage/people_manage");
                               } else {

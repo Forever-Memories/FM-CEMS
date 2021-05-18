@@ -30,6 +30,10 @@ public class CompetitionService {
         placeInfoStorage.create(name);
     }
 
+    public void edit(CompetitionInfoDO competitionInfoDO) {
+        competitionInfoStorage.edit(competitionInfoDO);
+    }
+
     public List<PlaceInfoDO> getAllPlace() {
         return placeInfoStorage.getAllPlaceInfo();
     }

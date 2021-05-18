@@ -2,6 +2,7 @@ package project.zzq.competition_epidemic_management_system.web.logic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import project.zzq.competition_epidemic_management_system.data.CompetitionInfoDO;
 import project.zzq.competition_epidemic_management_system.data.ParticipantInfoDO;
 import project.zzq.competition_epidemic_management_system.data.RegistryDO;
@@ -38,15 +39,19 @@ public class RegistryLogic {
 
     public List<RegistryVO> searchRegistry(SearchRegistryParam searchRegistryParam) {
         List<RegistryVO> allRegistry = getAllRegistry();
-        if (searchRegistryParam.getCompetitionName() != null) {
+        if (!StringUtils.isEmpty(searchRegistryParam.getCompetitionName())) {
             allRegistry = allRegistry.stream().filter(o -> o.getCompetitionName().equals(searchRegistryParam.getCompetitionName())).collect(Collectors.toList());
         }
 
-        if (searchRegistryParam.getParticipantName() != null) {
+        if (!StringUtils.isEmpty(searchRegistryParam.getParticipantName())) {
             allRegistry = allRegistry.stream().filter(o -> o.getUserName().equals(searchRegistryParam.getParticipantName())).collect(Collectors.toList());
         }
 
         return allRegistry;
+    }
+
+    public void delete(RegistryDO registryDO) {
+        registryService.delete(registryDO);
     }
 
     private RegistryVO do2VO(RegistryDO registryDO) {
@@ -63,6 +68,8 @@ public class RegistryLogic {
         SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         RegistryVO registryVO = new RegistryVO();
+        registryVO.setUserId(registryDO.getUserId());
+        registryVO.setCompetitionId(registryDO.getCompetitionId());
         registryVO.setUserName(participantInfoDO.getName());
         registryVO.setUserUnit(participantInfoDO.getUnit());
         registryVO.setCompetitionName(competitionInfoDO.getName());

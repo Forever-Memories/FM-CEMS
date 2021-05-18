@@ -6,10 +6,10 @@
                 <el-dropdown style="float: right;margin-right: 10px">
                     <i class="el-icon-setting"></i>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>退出登陆</el-dropdown-item>
+                        <el-button type="danger" @click="handleQuit" plain>退出登陆</el-button>
                     </el-dropdown-menu>
                 </el-dropdown>
-                <span style="float: right">朱浙庆</span>
+                <span style="float: right">欢迎您，{{this.name}}</span>
             </el-header>
             <el-container>
                 <el-aside width="200px">
@@ -62,17 +62,17 @@
     export default {
         name: "manage",
         data() {
-            const item = {
-                user_id: '0',
-                name: '朱浙庆',
-                unit: '安徽大学计科院',
-                id_number: '12345678'
-            };
             return {
                 list: null,
-                tableData: Array(20).fill(item)
+                name: localStorage.getItem('name')
             }
         },
+        methods: {
+            handleQuit() {
+                localStorage.setItem('userId', '0')
+                this.$router.push("/login");
+            }
+        }
     };
 </script>
 

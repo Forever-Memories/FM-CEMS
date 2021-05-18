@@ -49,6 +49,10 @@ public class CompetitionLogic {
         return competitionService.getAllCompetitionInfo().stream().map(this::competitionDO2VO).collect(Collectors.toList());
     }
 
+    public void edit(CompetitionInfoDO competitionInfoDO) {
+        competitionService.edit(competitionInfoDO);
+    }
+
     private CompetitionVO competitionDO2VO(CompetitionInfoDO competitionInfoDO) {
         CompetitionVO competitionVO = new CompetitionVO();
         Optional<PlaceInfoDO> placeInfoOptional = competitionService.getPlaceById(competitionInfoDO.getPlaceId());
@@ -56,9 +60,10 @@ public class CompetitionLogic {
             throw new RuntimeException("place is not exist.");
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         competitionVO.setId(competitionInfoDO.getId());
+        competitionVO.setPlaceId(competitionInfoDO.getPlaceId());
         competitionVO.setPlaceName(placeInfoOptional.get().getName());
         competitionVO.setName(competitionInfoDO.getName());
         competitionVO.setStartTime(format.format(competitionInfoDO.getStartTime()));

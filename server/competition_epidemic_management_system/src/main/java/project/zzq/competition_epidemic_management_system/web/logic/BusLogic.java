@@ -27,6 +27,10 @@ public class BusLogic {
         busService.deleteById(userId);
     }
 
+    public void edit(BusDO busDO) {
+        busService.edit(busDO);
+    }
+
     private BusVO do2VO(BusDO busDO) {
         BusVO busVO = new BusVO();
         SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm");

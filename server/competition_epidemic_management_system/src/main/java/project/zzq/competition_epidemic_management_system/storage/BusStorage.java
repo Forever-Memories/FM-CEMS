@@ -44,6 +44,23 @@ public class BusStorage {
         db.update(sql, source);
     }
 
+    public void edit(BusDO busDO) {
+        String sql = "UPDATE bus SET place_name = :place_name," +
+                "time = :time," +
+                "arrangement = :arrangement," +
+                "comment = :comment " +
+                "WHERE id = :id";
+
+        SqlParameterSource source = new MapSqlParameterSource()
+                .addValue("place_name", busDO.getPlaceName())
+                .addValue("time", busDO.getTime())
+                .addValue("arrangement", busDO.getArrangement())
+                .addValue("comment", busDO.getComment())
+                .addValue("id", busDO.getId());
+
+        db.update(sql, source);
+    }
+
     public List<BusDO> getAllBus() {
         String sql = "SELECT " + ALL_COLUMNS + "FROM `bus`";
 

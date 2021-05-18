@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import project.zzq.competition_epidemic_management_system.data.RegistryDO;
 
 import java.util.List;
@@ -36,5 +37,11 @@ public class RegistryStorage {
         String sql = "SELECT " + ALL_COLUMNS + "FROM `registry`";
 
         return db.query(sql, ROW_MAPPER);
+    }
+
+    public void delete(RegistryDO registryDO) {
+        String sql = "DELETE FROM registry WHERE user_id = :user_id AND competition_id = :competition_id";
+
+        db.update(sql, ImmutableMap.of("user_id", registryDO.getUserId(), "competition_id", registryDO.getCompetitionId()));
     }
 }

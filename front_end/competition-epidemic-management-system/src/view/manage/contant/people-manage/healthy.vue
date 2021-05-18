@@ -52,7 +52,7 @@
                     </el-form>
                     <span slot="footer" class="dialog-footer">
     <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="createRegistry('createFrom')">确 定</el-button>
+    <el-button type="primary" @click="createHealthy('createFrom')">确 定</el-button>
   </span>
                 </el-dialog>
             </el-form-item>
@@ -153,7 +153,7 @@
                 };
                 this.dialogCreateFormVisible = true;
             },
-            createRegistry(formHealthy) {
+            createHealthy(formHealthy) {
                 this.$refs[formHealthy].validate((valid) => {
                     if (valid) {
                         this.$axios.post('/competition-epidemic/healthy-info/create',
@@ -170,7 +170,7 @@
                         this.$message.error('上报健康信息失败');
                     }
                 });
-                this.dialogCreateFormVisible = false;
+                this.dialogCeateFormVisible = false;
                 this.reload();
             },
             deleteHealthyById(healthyId) {

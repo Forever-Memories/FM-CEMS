@@ -9,6 +9,7 @@ package project.zzq.competition_epidemic_management_system.web.logic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.zzq.competition_epidemic_management_system.service.SignInService;
+import project.zzq.competition_epidemic_management_system.web.data.SignInResultVO;
 
 /**
  * @author zhuzheqing
@@ -18,7 +19,7 @@ public class SignInLogic {
     @Autowired
     private SignInService signInService;
 
-    public boolean signIn(String phoneNumber, String password) {
+    public SignInResultVO signIn(String phoneNumber, String password) {
         return signInService.signIn(phoneNumber, password);
     }
 }

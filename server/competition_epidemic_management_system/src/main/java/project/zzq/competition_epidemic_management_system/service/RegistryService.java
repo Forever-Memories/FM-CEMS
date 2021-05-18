@@ -19,4 +19,8 @@ public class RegistryService {
     public List<RegistryDO> getAllRegistry() {
         return registryStorage.getAllRegistry();
     }
+
+    public void delete(RegistryDO registryDO) {
+        registryStorage.delete(registryDO);
+    }
 }

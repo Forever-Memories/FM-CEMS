@@ -41,4 +41,9 @@ public class CompetitionController {
     public List<CompetitionVO> searchCompetition(@RequestBody SearchCompetitionParam searchCompetitionParam) {
         return competitionLogic.searchCompetition(searchCompetitionParam);
     }
+
+    @PostMapping("/competition/edit")
+    public void edit(@RequestBody CompetitionInfoDO competitionInfoDO) {
+        competitionLogic.edit(competitionInfoDO);
+    }
 }

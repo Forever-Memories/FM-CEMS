@@ -10,7 +10,7 @@
                     <el-input v-model="createFrom.placeName"></el-input>
                 </el-form-item>
                 <el-form-item label="时间">
-                    <el-date-picker type="datetime" placeholder="选择日期时间" v-model="createFrom.time" value-formate="timestamp" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="datetime" placeholder="选择日期时间" v-model="createFrom.time" value-format="timestamp" style="width: 100%;"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="安排信息">
                     <el-input v-model="createFrom.arrangement"></el-input>
@@ -22,6 +22,29 @@
             <span slot="footer" class="dialog-footer">
     <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="createBus('createFrom')">确 定</el-button>
+  </span>
+        </el-dialog>
+        <el-dialog
+                title="编辑班车安排"
+                :visible.sync="dialogEditFormVisible"
+                width="30%">
+            <el-form ref="editFrom" :model="editFrom" label-width="80px" size="mini" label-position="left">
+                <el-form-item label="地点">
+                    <el-input v-model="editFrom.placeName"></el-input>
+                </el-form-item>
+                <el-form-item label="时间">
+                    <el-date-picker type="datetime" placeholder="选择日期时间" v-model="editFrom.time" value-format="timestamp" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="安排信息">
+                    <el-input v-model="editFrom.arrangement"></el-input>
+                </el-form-item>
+                <el-form-item label="备注">
+                    <el-input v-model="editFrom.comment"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="edit('editFrom')">确 定</el-button>
   </span>
         </el-dialog>
         <el-table :data="list">
@@ -40,7 +63,7 @@
                     label="操作"
                     width="200">
                 <template slot-scope="scope">
-                    <el-button  @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+                    <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
                     <el-popover
                             placement="top"
                             width="160"
@@ -65,12 +88,20 @@
             return {
                 list: null,
                 dialogCreateFormVisible: false,
+                dialogEditFormVisible : false,
                 deleteBusVisible: false,
                 createFrom: {
                     "arrangement": "",
                     "comment": "",
                     "placeName": "",
                     "time": new Date().getTime()
+                },
+                editFrom: {
+                    "arrangement": "",
+                    "comment": "",
+                    "id": null,
+                    "placeName": "",
+                    "time": null
                 }
             }
         },
@@ -119,9 +150,36 @@
                 this.deleteBusVisible = false;
                 this.reload();
             },
-            handleClick(row) {
-                console.log(row)
-            }
+            handleEdit(row) {
+                this.editFrom = {
+                    "arrangement": row.arrangement,
+                    "comment": row.comment,
+                    "id": row.id,
+                    "placeName": row.placeName,
+                    "time": Date.parse(new Date(row.time))
+                }
+                this.dialogEditFormVisible = true;
+            },
+            edit(formEdit) {
+                this.$refs[formEdit].validate((valid) => {
+                    if (valid) {
+                        console.log(this.editFrom)
+                        this.$axios.post('/competition-epidemic/bus/edit',
+                            {
+                                "arrangement": this.editFrom.arrangement,
+                                "comment": this.editFrom.comment,
+                                "id": this.editFrom.id,
+                                "placeName": this.editFrom.placeName,
+                                "time": this.editFrom.time
+                            }
+                        );
+                        this.reload();
+                    }else {
+                        this.$message.error('编辑班车信息失败');
+                    }
+                });
+                this.dialogEditFormVisible = false
+            },
         }
     }
 </script>

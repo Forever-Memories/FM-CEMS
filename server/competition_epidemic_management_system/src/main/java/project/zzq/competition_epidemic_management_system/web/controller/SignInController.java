@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import project.zzq.competition_epidemic_management_system.constant.CompetitionEpidemicManagementSystemConstant;
+import project.zzq.competition_epidemic_management_system.web.data.SignInResultVO;
 import project.zzq.competition_epidemic_management_system.web.data.SignInVO;
 import project.zzq.competition_epidemic_management_system.web.logic.SignInLogic;
 
@@ -28,7 +29,7 @@ public class SignInController {
 
     @PostMapping("/sign-in")
     @ResponseBody
-    public boolean signIn(@RequestBody SignInVO signInVO) {
+    public SignInResultVO signIn(@RequestBody SignInVO signInVO) {
         return signInLogic.signIn(signInVO.getPhoneNumber(), signInVO.getPassword());
     }
 

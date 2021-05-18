@@ -23,4 +23,8 @@ public class BusService {
     public void deleteById(Long busId) {
         busStorage.deleteById(busId);
     }
+
+    public void edit(BusDO busDO) {
+        busStorage.edit(busDO);
+    }
 }

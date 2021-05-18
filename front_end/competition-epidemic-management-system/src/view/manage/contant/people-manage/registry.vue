@@ -9,23 +9,23 @@
                 </el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">查询</el-button>
+                <el-button type="primary" @click="search()">查询</el-button>
                 <el-button type="primary" @click="handleCreate" plain>新增报名</el-button>
                 <el-dialog
                         title="新增报名"
                         :visible.sync="dialogCreateFormVisible"
                         width="60%">
-                    <el-form ref="form" :model="createFrom" label-width="80px" size="mini">
-                        <el-form-item label="参赛人员">
-                            <el-input v-model="createFrom.user"></el-input>
+                    <el-form ref="createFrom" :model="createFrom" label-width="100px" size="mini">
+                        <el-form-item label="参赛人员Id">
+                            <el-input v-model="createFrom.userId"></el-input>
                         </el-form-item>
-                        <el-form-item label="参赛项目">
-                            <el-input v-model="createFrom.competition"></el-input>
+                        <el-form-item label="参赛项目Id">
+                            <el-input v-model="createFrom.competitionId"></el-input>
                         </el-form-item>
                     </el-form>
                     <span slot="footer" class="dialog-footer">
     <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="createRegistry">确 定</el-button>
+    <el-button type="primary" @click="createRegistry('createFrom')">确 定</el-button>
   </span>
                 </el-dialog>
             </el-form-item>
@@ -44,8 +44,16 @@
                     label="操作"
                     width="200">
                 <template slot-scope="scope">
-                    <el-button  @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                    <el-button type="danger" size="small">删除</el-button>
+                    <el-popover
+                            placement="top"
+                            width="160"
+                            ref="deleteVisible">
+                        <p>确定删除该报名信息吗？</p>
+                        <div style="text-align: right; margin: 0">
+                            <el-button type="danger" size="mini" @click="deleteRegistry(scope.row)" >确定</el-button>
+                        </div>
+                        <el-button slot="reference" @click="deleteVisible = true" type="danger" size="small">删除</el-button>
+                    </el-popover>
                 </template>
             </el-table-column>
         </el-table>
@@ -59,14 +67,15 @@
         data() {
             return {
                 list: null,
+                deleteVisible: false,
                 formInline: {
                     competitionName: '',
                     peopleName: ''
                 },
                 dialogCreateFormVisible: false,
                 createFrom: {
-                    "competition": "",
-                    "user": ""
+                    "competitionId": null,
+                    "userId": null
                 }
             }
         },
@@ -85,14 +94,45 @@
             },
             handleCreate() {
                 this.createFrom = {
-                    "competition": "",
-                    "user": ""
+                    "competitionId": null,
+                    "userId": null
                 };
                 this.dialogCreateFormVisible = true;
             },
-            createRegistry() {
-
+            createRegistry(formRegistry) {
+                this.$refs[formRegistry].validate((valid) => {
+                    if (valid) {
+                        this.$axios.post('/competition-epidemic/registry/create',
+                            {
+                                "competitionId": this.createFrom.competitionId,
+                                "userId": this.createFrom.userId
+                            })
+                    } else {
+                        this.$message.error('新建报名信息息失败');
+                    }
+                });
                 this.dialogCreateFormVisible = false;
+                this.reload();
+            },
+            search() {
+                this.$axios.post('/competition-epidemic/registry/search',
+                    {
+                        competitionName: this.formInline.competitionName,
+                        participantName: this.formInline.peopleName
+                    }).then((res) => {
+                    this.list = res.data
+                });
+            },
+            deleteRegistry(row) {
+                console.log(row)
+                this.$axios.post('/competition-epidemic/registry/delete',
+                    {
+                        "competitionId": row.competitionId,
+                        "userId": row.userId
+                    }
+                )
+                this.deleteVisible = false;
+                this.reload();
             }
         }
     }

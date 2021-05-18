@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import project.zzq.competition_epidemic_management_system.constant.CompetitionEpidemicManagementSystemConstant;
 import project.zzq.competition_epidemic_management_system.data.RegistryDO;
 import project.zzq.competition_epidemic_management_system.web.data.RegistryVO;
+import project.zzq.competition_epidemic_management_system.web.data.SearchRegistryParam;
 import project.zzq.competition_epidemic_management_system.web.logic.RegistryLogic;
 
 import java.util.List;
@@ -23,5 +24,15 @@ public class RegistryController {
     @GetMapping("/registry/all-info")
     public List<RegistryVO> getAllRegistry() {
         return registryLogic.getAllRegistry();
+    }
+
+    @PostMapping("/registry/search")
+    public List<RegistryVO> searchRegistry(@RequestBody SearchRegistryParam searchRegistryParam) {
+        return registryLogic.searchRegistry(searchRegistryParam);
+    }
+
+    @PostMapping("/registry/delete")
+    public void delete(@RequestBody RegistryDO registryDO) {
+        registryLogic.delete(registryDO);
     }
 }

@@ -30,4 +30,9 @@ public class BusController {
     public void deleteById(@RequestBody DeleteBusVO deleteBusVO) {
         busLogic.deleteById(deleteBusVO.getBusId());
     }
+
+    @PostMapping("/bus/edit")
+    public void edit(@RequestBody BusDO busDO) {
+        busLogic.edit(busDO);
+    }
 }
