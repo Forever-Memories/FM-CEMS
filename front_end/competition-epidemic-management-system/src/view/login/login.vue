@@ -31,6 +31,7 @@
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('validateForm')">提交</el-button>
                         <el-button @click="resetForm('validateForm')">重置</el-button>
+                        <el-button >参赛用户注册</el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -79,11 +80,17 @@
                             }).then(res => {
                               console.log(res)
                               if(res.data.result) {
-                                localStorage.setItem('userId', this.validateForm.account);
+                                localStorage.setItem('userId', res.data.userId);
                                 localStorage.setItem('userType', res.data.userType);
                                 localStorage.setItem('name', res.data.name)
-                                this.$message.success('登陆成功')
-                                this.$router.push("/manage/people_manage");
+                                this.$message.success('登陆成功');
+                                if(res.data.userType === 3) {
+                                    this.$router.push("/manage/people_manage");
+                                } else if(res.data.userType === 1) {
+                                    this.$router.push("/participate/info");
+                                } else if(res.data.userType === 2) {
+                                    this.$router.push("/organize");
+                                }
                               } else {
                                 this.$message.error('登陆失败，请检查账号和密码');
                               }

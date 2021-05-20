@@ -44,4 +44,16 @@ public class RegistryStorage {
 
         db.update(sql, ImmutableMap.of("user_id", registryDO.getUserId(), "competition_id", registryDO.getCompetitionId()));
     }
+
+    public void deleteByUserId(Long userId) {
+        String sql = "DELETE FROM registry WHERE user_id = :user_id";
+
+        db.update(sql, ImmutableMap.of("user_id", userId));
+    }
+
+    public void deleteByCompetitionId(Long competitionId) {
+        String sql = "DELETE FROM registry WHERE competition_id = :competition_id";
+
+        db.update(sql, ImmutableMap.of( "competition_id", competitionId));
+    }
 }

@@ -79,4 +79,8 @@ public class CompetitionInfoStorage {
             return Optional.empty();
         }
     }
+
+    public void delete(Long competitionId) {
+        db.update("DELETE FROM competition_info WHERE id = :id", ImmutableMap.of("id", competitionId));
+    }
 }

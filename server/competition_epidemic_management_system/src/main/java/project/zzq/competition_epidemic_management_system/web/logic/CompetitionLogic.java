@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import project.zzq.competition_epidemic_management_system.data.CompetitionInfoDO;
 import project.zzq.competition_epidemic_management_system.data.PlaceInfoDO;
 import project.zzq.competition_epidemic_management_system.service.CompetitionService;
+import project.zzq.competition_epidemic_management_system.service.RegistryService;
 import project.zzq.competition_epidemic_management_system.web.data.CompetitionVO;
 import project.zzq.competition_epidemic_management_system.web.data.SearchCompetitionParam;
 
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 public class CompetitionLogic {
     @Autowired
     private CompetitionService competitionService;
+
+    @Autowired
+    private RegistryService registryService;
 
     public void createCompetition(CompetitionInfoDO competitionInfoDO) {
         competitionService.createCompetition(competitionInfoDO);
@@ -51,6 +55,11 @@ public class CompetitionLogic {
 
     public void edit(CompetitionInfoDO competitionInfoDO) {
         competitionService.edit(competitionInfoDO);
+    }
+
+    public void deleteByCompetitionId(Long competitionId) {
+        competitionService.delete(competitionId);
+        registryService.deleteByCompetitionId(competitionId);
     }
 
     private CompetitionVO competitionDO2VO(CompetitionInfoDO competitionInfoDO) {

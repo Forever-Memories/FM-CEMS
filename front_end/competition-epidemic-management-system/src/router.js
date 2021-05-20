@@ -9,12 +9,20 @@ Vue.prototype.$axios = axios;
 
 import login from './view/login/login'
 import manage from './view/manage/manage'
+import participate from "./view/manage/participate";
+import organize from "./view/manage/organize";
 import testcase from "./view/manage/contant/testcase";
 import people_manage from "./view/manage/contant/people-manage/people-manage"
 import healthy from "./view/manage/contant/people-manage/healthy";
 import competition from "./view/manage/contant/people-manage/competition";
 import registry from "./view/manage/contant/people-manage/registry";
 import bus from "./view/manage/contant/people-manage/bus";
+import participateInfo from "./view/manage/contant/participate/participate-info"
+import participateHealthy from "./view/manage/contant/participate/participate-healthy"
+import participateCompetition from "./view/manage/contant/participate/participate-competition"
+import participateBus from "./view/manage/contant/participate/participate-bus"
+import participateRegistry from "./view/manage/contant/participate/participate-registry"
+import organizeArrangement from "./view/manage/contant/people-manage/organize-arrangement"
 
 Vue.use(ElementUI)
 
@@ -61,8 +69,50 @@ const router = new Router({
                     path: 'bus',
                     name: 'bus',
                     component: bus
+                },
+                {
+                    path: 'organize-arrangement',
+                    name: 'organize-arrangement',
+                    component: organizeArrangement
                 }
             ]
+        },
+        {
+            path: '/participate',
+            name: 'participate',
+            component: participate,
+            children: [
+                {
+                    path: 'info',
+                    name: 'info',
+                    component: participateInfo
+                },
+                {
+                    path: 'healthy',
+                    name: 'healthy',
+                    component: participateHealthy
+                },
+                {
+                    path: 'competition',
+                    name: 'competition',
+                    component: participateCompetition
+                },
+                {
+                    path: 'bus',
+                    name: 'bus',
+                    component: participateBus
+                },
+                {
+                    path: 'registry',
+                    name: 'registry',
+                    component: participateRegistry
+                }
+            ]
+        },
+        {
+            path: '/organize',
+            name: 'organize',
+            component: organize
         }
     ]
 

@@ -84,4 +84,7 @@ public class UserStorage {
         }
     }
 
+    public void delete(Long userId) {
+        db.update("DELETE FROM user WHERE id = :id", ImmutableMap.of("id", userId));
+    }
 }

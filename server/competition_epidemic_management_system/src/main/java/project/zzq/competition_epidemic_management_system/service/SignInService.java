@@ -45,6 +45,7 @@ public class SignInService {
             if(userOptional.get().getPassword().equals(password)) {
                 result.setResult(true);
                 ParticipantInfoDO participantInfoDO = participantInfoStorage.getParticipantInfoByUserIds(Collections.singletonList(userOptional.get().getId())).get(0);
+                result.setUserId(participantInfoDO.getUserId());
                 result.setName(participantInfoDO.getName());
                 result.setUserType(userOptional.get().getType().toInt());
                 return result;

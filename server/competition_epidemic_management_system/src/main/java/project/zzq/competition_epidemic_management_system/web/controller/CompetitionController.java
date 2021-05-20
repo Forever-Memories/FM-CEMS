@@ -6,6 +6,7 @@ import project.zzq.competition_epidemic_management_system.constant.CompetitionEp
 import project.zzq.competition_epidemic_management_system.data.CompetitionInfoDO;
 import project.zzq.competition_epidemic_management_system.data.PlaceInfoDO;
 import project.zzq.competition_epidemic_management_system.web.data.CompetitionVO;
+import project.zzq.competition_epidemic_management_system.web.data.DeleteCompetitionParam;
 import project.zzq.competition_epidemic_management_system.web.data.SearchCompetitionParam;
 import project.zzq.competition_epidemic_management_system.web.logic.CompetitionLogic;
 
@@ -45,5 +46,10 @@ public class CompetitionController {
     @PostMapping("/competition/edit")
     public void edit(@RequestBody CompetitionInfoDO competitionInfoDO) {
         competitionLogic.edit(competitionInfoDO);
+    }
+
+    @PostMapping("/competition/delete")
+    public void deleteByCompetitionId(@RequestBody DeleteCompetitionParam deleteCompetitionParam) {
+        competitionLogic.deleteByCompetitionId(deleteCompetitionParam.getCompetitionId());
     }
 }

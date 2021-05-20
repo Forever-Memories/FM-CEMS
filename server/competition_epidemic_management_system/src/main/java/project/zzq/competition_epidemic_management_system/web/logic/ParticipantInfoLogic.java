@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import project.zzq.competition_epidemic_management_system.data.ParticipantInfoDO;
 import project.zzq.competition_epidemic_management_system.data.UserDO;
+import project.zzq.competition_epidemic_management_system.service.OrganizeArrangementService;
 import project.zzq.competition_epidemic_management_system.service.ParticipantInfoService;
+import project.zzq.competition_epidemic_management_system.service.RegistryService;
 import project.zzq.competition_epidemic_management_system.service.UserService;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantCreateParam;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantInfoVO;
@@ -23,6 +25,12 @@ public class ParticipantInfoLogic {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RegistryService registryService;
+
+    @Autowired
+    private OrganizeArrangementService organizeArrangementService;
 
     public void create(ParticipantCreateParam participantCreateParam) {
         Long userId = userService.signUpUser(participantCreateParam.getUserDO());
@@ -55,6 +63,17 @@ public class ParticipantInfoLogic {
 
     public void edit(ParticipantInfoDO participantInfoDO) {
         participantInfoService.edit(participantInfoDO);
+    }
+
+    /**
+     * 删除一个用户：同时删除账号，参赛详情和报名信息
+     * @param userId
+     */
+    public void deleteByUserId(Long userId) {
+        userService.delete(userId);
+        participantInfoService.delete(userId);
+        registryService.deleteByUserId(userId);
+        organizeArrangementService.deleteByUserId(userId);
     }
 
     private ParticipantInfoVO participantInfoDO2VO(ParticipantInfoDO participantInfoDO) {

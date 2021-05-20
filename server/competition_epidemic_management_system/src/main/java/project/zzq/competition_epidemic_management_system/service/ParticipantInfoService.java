@@ -31,4 +31,8 @@ public class ParticipantInfoService {
     public void edit(ParticipantInfoDO participantInfoDO) {
         participantInfoStorage.edit(participantInfoDO);
     }
+
+    public void delete(Long userId) {
+        participantInfoStorage.delete(userId);
+    }
 }

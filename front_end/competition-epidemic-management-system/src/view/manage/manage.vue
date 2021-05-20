@@ -9,7 +9,7 @@
                         <el-button type="danger" @click="handleQuit" plain>退出登陆</el-button>
                     </el-dropdown-menu>
                 </el-dropdown>
-                <span style="float: right">欢迎您，{{this.name}}</span>
+                <span style="float: right">欢迎您，{{this.name}}，您的身份是{{this.userType}}</span>
             </el-header>
             <el-container>
                 <el-aside width="200px">
@@ -47,6 +47,9 @@
                             <el-menu-item index="/manage/registry">
                                 <template slot="title"><i class="el-icon-s-claim"></i>报名信息</template>
                             </el-menu-item>
+                            <el-menu-item index="/manage/organize-arrangement">
+                                <template slot="title"><i class="el-icon-s-order"></i>组织信息</template>
+                            </el-menu-item>
                         </el-submenu>
                     </el-menu>
                 </el-aside>
@@ -64,15 +67,31 @@
         data() {
             return {
                 list: null,
-                name: localStorage.getItem('name')
+                name: localStorage.getItem('name'),
+                userType: null
             }
         },
+        created() {
+            this.getType()
+        }
+        ,
         methods: {
             handleQuit() {
                 localStorage.setItem('userId', '0')
                 localStorage.setItem('userType', null);
                 localStorage.setItem('name', null)
                 this.$router.push("/login");
+            },
+            getType() {
+                console.log(localStorage.getItem('userType'))
+                let userType = localStorage.getItem('userType')
+                if (userType === "1") {
+                    this.userType = "参赛人员"
+                } else if (userType === "2") {
+                    this.userType = "组织人员"
+                } else if(userType === "3") {
+                    this.userType = "管理员"
+                }
             }
         }
     };

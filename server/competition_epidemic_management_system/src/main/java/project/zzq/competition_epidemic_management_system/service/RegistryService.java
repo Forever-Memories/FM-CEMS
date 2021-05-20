@@ -23,4 +23,13 @@ public class RegistryService {
     public void delete(RegistryDO registryDO) {
         registryStorage.delete(registryDO);
     }
+
+    public void deleteByUserId(Long userId) {
+        registryStorage.deleteByUserId(userId);
+    }
+
+    public void deleteByCompetitionId(Long competitionId) {
+        registryStorage.deleteByCompetitionId(competitionId);
+    }
+
 }

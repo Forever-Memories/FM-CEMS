@@ -31,4 +31,8 @@ public class UserService {
 
         return userOptional.get();
     }
+
+    public void delete(Long userId) {
+        userStorage.delete(userId);
+    }
 }

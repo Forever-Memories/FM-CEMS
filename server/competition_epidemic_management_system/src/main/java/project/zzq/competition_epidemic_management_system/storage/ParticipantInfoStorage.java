@@ -84,4 +84,8 @@ public class ParticipantInfoStorage {
 
         return db.query(sql, ROW_MAPPER);
     }
+
+    public void delete(Long userId) {
+        db.update("DELETE FROM participants_info WHERE user_id = :userId", ImmutableMap.of("userId", userId));
+    }
 }

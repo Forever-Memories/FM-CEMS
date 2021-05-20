@@ -72,7 +72,7 @@
                 </el-dialog>
             </el-form-item>
         </el-form>
-        <el-table :data="list">
+        <el-table :data="list.slice((currentPage-1)*pageSize,currentPage*pageSize)">
             <el-table-column prop="userId" label="人员id"  width="100">
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="120">
@@ -91,10 +91,27 @@
               width="120">
             <template slot-scope="scope">
                 <el-button  @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
-
+                <el-popover
+                        placement="top"
+                        width="160"
+                        ref="deleteVisible">
+                    <p>危险操作！确定删除该用户的信息吗？</p>
+                    <div style="text-align: right; margin: 0">
+                        <el-button type="danger" size="mini" @click="deleteByUserId(scope.row.userId)" >确定</el-button>
+                    </div>
+                    <el-button slot="reference" @click="deleteVisible = true" type="danger" size="small">删除</el-button>
+                </el-popover>
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                layout="prev, pager, next"
+                :page-size="pageSize"
+                :total="this.list.length">
+        </el-pagination>
     </el-main>
 </template>
 
@@ -104,12 +121,15 @@
         inject: ['reload'],
         data() {
             return {
+                currentPage: 1,
+                pageSize:10,
                 list: null,
                 typeList: ["参赛人员","组织人员"],
                 formInline: {
                     unit: '',
                     peopleName: ''
                 },
+                deleteVisible: false,
                 dialogCreateFormVisible: false,
                 dialogEditFormVisible: false,
                 createFrom: {
@@ -138,6 +158,14 @@
             this.getData();
         },
         methods: {
+            handleSizeChange: function (size) {
+                this.pageSize = size;
+                console.log(this.pageSize)  //每页下拉显示数据
+            },
+            handleCurrentChange: function(currentPage){
+                this.currentPage = currentPage;
+                console.log(this.currentPage)  //点击第几页
+            },
             getData() {
                 this.$axios.get('/competition-epidemic/participant-info/all-infos').then((res) => {
                     console.log(res)
@@ -226,6 +254,14 @@
                 });
                 this.dialogCreateFormVisible = false;
                 this.reload()
+            },
+            deleteByUserId(userId) {
+                this.$axios.post('/competition-epidemic/participant-info/delete',
+                    {
+                        "userId": userId
+                    })
+                this.deleteVisible = false;
+                this.reload();
             }
         }
     }

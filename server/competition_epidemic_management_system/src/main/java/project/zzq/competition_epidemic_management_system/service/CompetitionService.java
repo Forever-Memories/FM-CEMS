@@ -45,4 +45,8 @@ public class CompetitionService {
     public Optional<CompetitionInfoDO> getCompetitionById(Long competitionId) {
         return competitionInfoStorage.getCompetitionById(competitionId);
     }
+
+    public void delete(Long competitionId) {
+        competitionInfoStorage.delete(competitionId);
+    }
 }

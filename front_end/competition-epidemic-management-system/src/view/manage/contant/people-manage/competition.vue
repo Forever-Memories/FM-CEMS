@@ -111,6 +111,16 @@
                     width="200">
                 <template slot-scope="scope">
                     <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+                    <el-popover
+                            placement="top"
+                            width="160"
+                            ref="deleteVisible">
+                        <p>危险操作！确定删除该项比赛吗？</p>
+                        <div style="text-align: right; margin: 0">
+                            <el-button type="danger" size="mini" @click="deleteCompetitionId(scope.row.id)" >确定</el-button>
+                        </div>
+                        <el-button slot="reference" @click="deleteVisible = true" type="danger" size="small">删除</el-button>
+                    </el-popover>
                 </template>
             </el-table-column>
         </el-table>
@@ -123,6 +133,7 @@
         inject: ['reload'],
         data() {
             return {
+                deleteVisible: false,
                 competitionList: null,
                 placeList: null,
                 formInline: {
@@ -257,6 +268,14 @@
                     this.competitionList = res.data
                 });
             },
+            deleteCompetitionId(competitionId) {
+                this.$axios.post('/competition-epidemic/competition/delete',
+                    {
+                        "competitionId": competitionId
+                    })
+                this.deleteVisible = false;
+                this.reload();
+            }
         }
     }
 </script>

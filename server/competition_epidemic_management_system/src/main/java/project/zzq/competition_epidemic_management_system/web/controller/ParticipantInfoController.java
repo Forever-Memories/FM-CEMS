@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project.zzq.competition_epidemic_management_system.constant.CompetitionEpidemicManagementSystemConstant;
 import project.zzq.competition_epidemic_management_system.data.ParticipantInfoDO;
+import project.zzq.competition_epidemic_management_system.web.data.DeleteUserParam;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantCreateParam;
 import project.zzq.competition_epidemic_management_system.web.data.ParticipantInfoVO;
 import project.zzq.competition_epidemic_management_system.web.data.SearchParticipantParam;
@@ -22,8 +23,8 @@ public class ParticipantInfoController {
         participantInfoLogic.create(participantCreateParam);
     }
 
-    @GetMapping("/participant-info/infos")
-    public List<ParticipantInfoVO> getParticipantInfoByUserIds(@RequestParam List<Long> userIds) {
+    @PostMapping("/participant-info/infos")
+    public List<ParticipantInfoVO> getParticipantInfoByUserIds(@RequestBody List<Long> userIds) {
         return participantInfoLogic.getParticipantInfoByUserIds(userIds);
     }
 
@@ -42,4 +43,8 @@ public class ParticipantInfoController {
         participantInfoLogic.edit(participantInfoDO);
     }
 
+    @PostMapping("/participant-info/delete")
+    public void deleteByUserId(@RequestBody DeleteUserParam deleteUserParam) {
+        participantInfoLogic.deleteByUserId(deleteUserParam.getUserId());
+    }
 }
