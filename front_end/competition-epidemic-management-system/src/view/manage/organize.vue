@@ -28,24 +28,24 @@
                         </el-menu-item>
                         <el-submenu index="2">
                             <template slot="title"><i class="el-icon-user"></i>信息管理</template>
-                            <el-menu-item index="/participate/info">
+                            <el-menu-item index="/organize/info">
                                 <template slot="title"><i class="el-icon-user"></i>我的信息</template>
                             </el-menu-item>
-                            <el-menu-item index="/participate/healthy">
+                            <el-menu-item index="/organize/healthy">
                                 <template slot="title"><i class="el-icon-upload"></i>健康信息上报</template>
                             </el-menu-item>
                         </el-submenu>
-                        <el-menu-item index="/participate/competition">
+                        <el-menu-item index="/organize/competition">
                             <i class="el-icon-s-help"></i>
                             <span slot="title">赛事查询</span>
                         </el-menu-item>
                         <el-submenu index="5">
                             <template slot="title"><i class="el-icon-date"></i>参赛活动</template>
-                            <el-menu-item index="/participate/bus">
+                            <el-menu-item index="/organize/bus">
                                 <template slot="title"><i class="el-icon-position"></i>班车安排</template>
                             </el-menu-item>
-                            <el-menu-item index="/participate/registry">
-                                <template slot="title"><i class="el-icon-s-claim"></i>我的报名</template>
+                            <el-menu-item index="/organize/organize-arrangement">
+                                <template slot="title"><i class="el-icon-s-claim"></i>我的组织活动安排</template>
                             </el-menu-item>
                         </el-submenu>
                     </el-menu>

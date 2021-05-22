@@ -11,6 +11,7 @@ public class ParticipantInfoVO {
     private String unit;
     private String idNumber;
     private String comeFrom;
+    private String phoneNumber;
     private String type;
 
     public ParticipantInfoVO(ParticipantInfoDO participantInfoDO, UserDO userDO) {
@@ -20,5 +21,6 @@ public class ParticipantInfoVO {
         this.idNumber = participantInfoDO.getIdNumber();
         this.comeFrom = participantInfoDO.getComeFrom();
         this.type = userDO.getType().toString();
+        this.phoneNumber = userDO.getPhoneNumber();
     }
 }

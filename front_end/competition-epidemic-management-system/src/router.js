@@ -23,6 +23,7 @@ import participateCompetition from "./view/manage/contant/participate/participat
 import participateBus from "./view/manage/contant/participate/participate-bus"
 import participateRegistry from "./view/manage/contant/participate/participate-registry"
 import organizeArrangement from "./view/manage/contant/people-manage/organize-arrangement"
+import participateArrangement from "./view/manage/contant/participate/participate-arrangement"
 
 Vue.use(ElementUI)
 
@@ -112,7 +113,34 @@ const router = new Router({
         {
             path: '/organize',
             name: 'organize',
-            component: organize
+            component: organize,
+            children: [
+                {
+                    path: 'info',
+                    name: 'info',
+                    component: participateInfo
+                },
+                {
+                    path: 'healthy',
+                    name: 'healthy',
+                    component: participateHealthy
+                },
+                {
+                    path: 'competition',
+                    name: 'competition',
+                    component: participateCompetition
+                },
+                {
+                    path: 'bus',
+                    name: 'bus',
+                    component: participateBus
+                },
+                {
+                    path: 'organize-arrangement',
+                    name: 'organize-arrangement',
+                    component: participateArrangement
+                }
+            ]
         }
     ]
 

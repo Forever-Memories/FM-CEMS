@@ -1,5 +1,34 @@
 <template>
     <body>
+    <el-dialog
+            title="新增人员信息"
+            :visible.sync="dialogCreateFormVisible"
+            width="50%">
+        <el-form ref="createFrom" :model="createFrom" label-width="120px" size="mini" label-position="left">
+            <el-form-item label="姓名">
+                <el-input v-model="createFrom.participantInfoDO.name"></el-input>
+            </el-form-item>
+            <el-form-item label="所属单位">
+                <el-input v-model="createFrom.participantInfoDO.unit"></el-input>
+            </el-form-item>
+            <el-form-item label="身份证号">
+                <el-input v-model="createFrom.participantInfoDO.idNumber"></el-input>
+            </el-form-item>
+            <el-form-item label="来源地">
+                <el-input v-model="createFrom.participantInfoDO.comeFrom"></el-input>
+            </el-form-item>
+            <el-form-item label="联系号码">
+                <el-input v-model="createFrom.userDO.phoneNumber"></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+                <el-input v-model="createFrom.userDO.password"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="createPeople('createFrom')">确 定</el-button>
+  </span>
+    </el-dialog>
     <el-row>
         <el-col :span="8" :offset="8">
             <el-card class="login-card">
@@ -31,7 +60,7 @@
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('validateForm')">提交</el-button>
                         <el-button @click="resetForm('validateForm')">重置</el-button>
-                        <el-button >参赛用户注册</el-button>
+                        <el-button @click="handleCreate()">参赛用户注册</el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -57,10 +86,64 @@
         name: 'login',
         data() {
             return {
+                dialogCreateFormVisible: false,
                 validateForm: {
                     account: '',
                     password: ''
-                }
+                },
+                createFrom: {
+                    "participantInfoDO": {
+                        "comeFrom": "",
+                        "idNumber": "",
+                        "name": "",
+                        "unit": ""
+                    },
+                    "userDO": {
+                        "password": "",
+                        "phoneNumber": "",
+                        "type": "参赛人员"
+                    }
+                },
+                handleCreate() {
+                    this.createFrom = {
+                        "participantInfoDO": {
+                            "comeFrom": "",
+                            "idNumber": "",
+                            "name": "",
+                            "unit": "",
+                        },
+                        "userDO": {
+                            "password": "",
+                            "phoneNumber": "",
+                            "type": "参赛人员"
+                        }
+                    };
+                    this.dialogCreateFormVisible = true;
+                },
+                createPeople(formPeople) {
+                    this.$refs[formPeople].validate((valid) => {
+                        if (valid) {
+                            this.$axios.post('/competition-epidemic/participant-info/create',
+                                {
+                                    "participantInfoDO": {
+                                        "comeFrom": this.createFrom.participantInfoDO.comeFrom,
+                                        "idNumber": this.createFrom.participantInfoDO.idNumber,
+                                        "name": this.createFrom.participantInfoDO.name,
+                                        "unit": this.createFrom.participantInfoDO.unit,
+                                    },
+                                    "userDO": {
+                                        "password": this.createFrom.userDO.password,
+                                        "phoneNumber": this.createFrom.userDO.phoneNumber,
+                                        "type": this.createFrom.userDO.type
+                                    }
+                                });
+                        } else {
+                            this.$message.error('新增人员信息失败');
+                        }
+                    });
+                    this.dialogCreateFormVisible = false;
+                    this.reload()
+                },
             };
         },
         created() {
@@ -89,7 +172,7 @@
                                 } else if(res.data.userType === 1) {
                                     this.$router.push("/participate/info");
                                 } else if(res.data.userType === 2) {
-                                    this.$router.push("/organize");
+                                    this.$router.push("/organize/organize-arrangement");
                                 }
                               } else {
                                 this.$message.error('登陆失败，请检查账号和密码');

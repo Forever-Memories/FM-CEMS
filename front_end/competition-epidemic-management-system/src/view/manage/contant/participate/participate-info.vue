@@ -38,7 +38,9 @@
             </el-table-column>
             <el-table-column prop="idNumber" label="身份证号" width="180">
             </el-table-column>
-            <el-table-column prop="comeFrom" label="来源地">
+            <el-table-column prop="comeFrom" label="来源地" width="100">
+            </el-table-column>
+            <el-table-column prop="phoneNumber" label="联系号码" width="280">
             </el-table-column>
           <el-table-column
               fixed="right"

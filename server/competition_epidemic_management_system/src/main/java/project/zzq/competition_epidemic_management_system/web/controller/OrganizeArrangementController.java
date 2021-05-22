@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import project.zzq.competition_epidemic_management_system.constant.CompetitionEpidemicManagementSystemConstant;
 import project.zzq.competition_epidemic_management_system.data.OrganizeArrangementDO;
 import project.zzq.competition_epidemic_management_system.web.data.DeleteArrangementParam;
+import project.zzq.competition_epidemic_management_system.web.data.GetArrangementParam;
 import project.zzq.competition_epidemic_management_system.web.data.OrganizeArrangementVO;
 import project.zzq.competition_epidemic_management_system.web.logic.OrganizeArrangementLogic;
 
@@ -19,6 +20,11 @@ public class OrganizeArrangementController {
     @GetMapping("/organize-arrangement/all-info")
     public List<OrganizeArrangementVO> getAllOrganizeArrangement() {
         return organizeArrangementLogic.getAllOrganizeArrangement();
+    }
+
+    @PostMapping("/organize-arrangement/info")
+    public List<OrganizeArrangementVO> getOrganizeArrangementByUserId(@RequestBody GetArrangementParam getArrangementParam) {
+        return organizeArrangementLogic.getOrganizeArrangementByUserId(getArrangementParam.getUserId());
     }
 
     @PostMapping("/organize-arrangement/create")

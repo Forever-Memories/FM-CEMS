@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import project.zzq.competition_epidemic_management_system.data.HealthyInfoDO;
 import project.zzq.competition_epidemic_management_system.data.ParticipantInfoDO;
+import project.zzq.competition_epidemic_management_system.data.WarnDO;
 import project.zzq.competition_epidemic_management_system.service.HealthyInfoService;
 import project.zzq.competition_epidemic_management_system.service.ParticipantInfoService;
+import project.zzq.competition_epidemic_management_system.storage.NoticeStorage;
+import project.zzq.competition_epidemic_management_system.storage.WarnStorage;
 import project.zzq.competition_epidemic_management_system.web.data.HealthyInfoVO;
 import project.zzq.competition_epidemic_management_system.web.data.SearchHealthyInfoParam;
 
@@ -24,8 +27,38 @@ public class HealthyInfoLogic {
     @Autowired
     private ParticipantInfoService participantInfoService;
 
+    @Autowired
+    private NoticeStorage noticeStorage;
+
+    @Autowired
+    private WarnStorage warnStorage;
+
     public void create(HealthyInfoDO healthyInfoDO) {
         healthyInfoService.create(healthyInfoDO);
+
+        ParticipantInfoDO participantInfoDO = participantInfoService.getParticipantInfoByUserIds(Collections.singletonList(healthyInfoDO.getUserId())).get(0);
+
+        if(healthyInfoDO.getIsCough() || healthyInfoDO.getIsHistory() || healthyInfoDO.getIsTouch()) {
+            WarnDO warnDO = warnStorage.getIdByUserId(healthyInfoDO.getUserId());
+
+            if (warnDO == null) {
+                warnDO = new WarnDO();
+                warnDO.setUserId(healthyInfoDO.getUserId());
+                warnDO.setIsCough(healthyInfoDO.getIsCough());
+                warnDO.setIsHistory(healthyInfoDO.getIsHistory());
+                warnDO.setIsTouch(healthyInfoDO.getIsTouch());
+
+                warnStorage.create(warnDO);
+            } else {
+                warnDO.setIsCough(healthyInfoDO.getIsCough());
+                warnDO.setIsHistory(healthyInfoDO.getIsHistory());
+                warnDO.setIsTouch(healthyInfoDO.getIsTouch());
+
+                warnStorage.update(warnDO);
+            }
+
+            noticeStorage.create(String.format("来自%s的%s健康状态发生异常，请管理人员及时处理突发状况!", participantInfoDO.getUnit(), participantInfoDO.getName()), System.currentTimeMillis());
+        }
     }
 
     public List<HealthyInfoVO> getAllHealthyInfo() {
