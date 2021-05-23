@@ -1,7 +1,7 @@
 <template>
     <body>
     <el-dialog
-            title="新增人员信息"
+            title="参赛人员注册"
             :visible.sync="dialogCreateFormVisible"
             width="50%">
         <el-form ref="createFrom" :model="createFrom" label-width="120px" size="mini" label-position="left">
@@ -32,7 +32,7 @@
     <el-row>
         <el-col :span="8" :offset="8">
             <el-card class="login-card">
-                <h2>欢迎登录FM-CEMS(Alpha)</h2>
+                <h2>欢迎使用赛事疫情防控管理系统</h2>
                 <el-divider></el-divider>
                 <el-form :model="validateForm" ref="validateForm" label-width="100px" class="demo-ruleForm">
                     <el-form-item
@@ -138,7 +138,7 @@
                                     }
                                 });
                         } else {
-                            this.$message.error('新增人员信息失败');
+                            this.$message.error('注册信息失败');
                         }
                     });
                     this.dialogCreateFormVisible = false;

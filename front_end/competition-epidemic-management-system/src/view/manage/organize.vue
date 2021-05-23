@@ -2,7 +2,7 @@
     <div class="manage">
         <el-container>
             <el-header>
-                <span style="float: left; font-weight: 900; font-size: 30px;">FM-CEMS</span>
+                <span style="float: left; font-weight: 900; font-size: 30px;">赛事疫情防控管理系统</span>
                 <el-dropdown style="float: right;margin-right: 10px">
                     <i class="el-icon-setting"></i>
                     <el-dropdown-menu slot="dropdown">
@@ -22,10 +22,6 @@
                             text-color="#fff"
                             active-text-color="#ffd04b"
                             router>
-                        <el-menu-item index="/manage/testcase">
-                            <i class="el-icon-postcard"></i>
-                            <span slot="title">测试页</span>
-                        </el-menu-item>
                         <el-submenu index="2">
                             <template slot="title"><i class="el-icon-user"></i>信息管理</template>
                             <el-menu-item index="/organize/info">

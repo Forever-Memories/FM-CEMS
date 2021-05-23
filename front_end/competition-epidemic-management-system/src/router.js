@@ -24,6 +24,8 @@ import participateBus from "./view/manage/contant/participate/participate-bus"
 import participateRegistry from "./view/manage/contant/participate/participate-registry"
 import organizeArrangement from "./view/manage/contant/people-manage/organize-arrangement"
 import participateArrangement from "./view/manage/contant/participate/participate-arrangement"
+import warn from "./view/manage/contant/people-manage/warn";
+import notice from "./view/manage/contant/people-manage/notice";
 
 Vue.use(ElementUI)
 
@@ -45,6 +47,16 @@ const router = new Router({
                     path: 'testcase',
                     name: 'testcase',
                     component: testcase
+                },
+                {
+                    path: 'notice',
+                    name: 'notice',
+                    component: notice
+                },
+                {
+                    path: 'warn',
+                    name: 'warn',
+                    component: warn
                 },
                 {
                     path: 'people_manage',

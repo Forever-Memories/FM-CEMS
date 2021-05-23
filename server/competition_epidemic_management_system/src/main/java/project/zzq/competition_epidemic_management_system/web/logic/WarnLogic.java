@@ -43,7 +43,7 @@ public class WarnLogic {
         warnVO.setUnit(participantInfoDO.getUnit());
         warnVO.setIsCough(bool2String(warnDO.getIsCough()));
         warnVO.setIsHistory(bool2String(warnDO.getIsHistory()));
-        warnVO.setIsTouch(bool2String(warnDO.getIsTouch()));
+        warnVO.setIsTough(bool2String(warnDO.getIsTouch()));
 
 
         return warnVO;

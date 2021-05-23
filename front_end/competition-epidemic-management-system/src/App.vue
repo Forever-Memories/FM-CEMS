@@ -45,6 +45,7 @@ html,body,#app {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: "微软雅黑";
 }
 
 </style>

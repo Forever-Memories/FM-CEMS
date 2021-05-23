@@ -31,14 +31,14 @@
     <el-button type="primary" @click="createArrange('createFrom')">确 定</el-button>
   </span>
         </el-dialog>
-        <el-table :data="list">
+        <el-table :data="list.slice((currentPage-1)*pageSize,currentPage*pageSize)">
             <el-table-column prop="userName" label="组织人员" width="120">
             </el-table-column>
             <el-table-column prop="placeName" label="活动场地" width="200">
             </el-table-column>
             <el-table-column prop="startTime" label="开始时间" width="200">
             </el-table-column>
-            <el-table-column prop="endTime" label="结束时间" width="200">
+            <el-table-column prop="endTime" label="结束时间" width="400">
             </el-table-column>
             <el-table-column
                     fixed="right"
@@ -58,6 +58,14 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                layout="prev, pager, next"
+                :page-size="pageSize"
+                :total="this.list.length">
+        </el-pagination>
     </el-main>
 </template>
 
@@ -68,6 +76,8 @@
         data() {
             return {
                 list: null,
+                currentPage: 1,
+                pageSize:10,
                 placeList: null,
                 dialogCreateFormVisible: false,
                 deleteVisible: false,
@@ -104,6 +114,14 @@
                     "endTime": new Date().getTime()
                 };
                 this.dialogCreateFormVisible = true;
+            },
+            handleSizeChange: function (size) {
+                this.pageSize = size;
+                console.log(this.pageSize)  //每页下拉显示数据
+            },
+            handleCurrentChange: function(currentPage){
+                this.currentPage = currentPage;
+                console.log(this.currentPage)  //点击第几页
             },
             createArrange(createFrom) {
                 this.$refs[createFrom].validate((valid) => {

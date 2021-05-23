@@ -2,7 +2,7 @@
     <div class="manage">
         <el-container>
             <el-header>
-                <span style="float: left; font-weight: 900; font-size: 30px;">FM-CEMS</span>
+                <span style="float: left; font-weight: 900; font-size: 30px; font-family: 微软雅黑">赛事疫情防控管理系统</span>
                 <el-dropdown style="float: right;margin-right: 10px">
                     <i class="el-icon-setting"></i>
                     <el-dropdown-menu slot="dropdown">
@@ -18,13 +18,13 @@
                             class="el-menu-vertical-demo"
                             @open="handleOpen"
                             @close="handleClose"
-                            background-color="#545c64"
+                            background-color="#4b5b6c"
                             text-color="#fff"
                             active-text-color="#ffd04b"
                             router>
-                        <el-menu-item index="/manage/testcase">
-                            <i class="el-icon-postcard"></i>
-                            <span slot="title">测试页</span>
+                        <el-menu-item index="/manage/notice">
+                            <i class="el-icon-bell"></i>
+                            <span slot="title">系统消息</span>
                         </el-menu-item>
                         <el-submenu index="2">
                             <template slot="title"><i class="el-icon-user"></i>人员管理</template>
@@ -33,6 +33,10 @@
                             </el-menu-item>
                             <el-menu-item index="/manage/healthy">
                                 <template slot="title"><i class="el-icon-upload"></i>健康信息上报</template>
+                            </el-menu-item>
+                            <el-menu-item index="/manage/warn">
+                                <i class="el-icon-warning-outline"></i>
+                                <span slot="title">疫情异常信息</span>
                             </el-menu-item>
                         </el-submenu>
                         <el-menu-item index="/manage/competition">
@@ -99,7 +103,7 @@
 
 <style scoped>
     .el-header {
-        background-color: #B3C0D1;
+        background-color: #96b8e2;
         color: #333;
         line-height: 60px;
     }
@@ -109,8 +113,8 @@
     }
 
     .el-aside {
-        background-color: #545c64;
-        color: #333;
+        background-color: #4b5b6c;
+        color: #868585;
         text-align: center;
     }
 

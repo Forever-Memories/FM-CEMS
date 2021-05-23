@@ -11,5 +11,5 @@ public class WarnVO {
     private String comeFrom;
     private String isCough;
     private String isHistory;
-    private String isTouch;
+    private String isTough;
 }
