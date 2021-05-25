@@ -53,6 +53,12 @@ public class CompetitionLogic {
         return competitionService.getAllCompetitionInfo().stream().map(this::competitionDO2VO).collect(Collectors.toList());
     }
 
+    public CompetitionVO getCompetitionById(Long competitionId) {
+        Optional<CompetitionInfoDO> competitionInfoDO = competitionService.getCompetitionById(competitionId);
+
+        return competitionInfoDO.map(this::competitionDO2VO).orElse(null);
+    }
+
     public void edit(CompetitionInfoDO competitionInfoDO) {
         competitionService.edit(competitionInfoDO);
     }

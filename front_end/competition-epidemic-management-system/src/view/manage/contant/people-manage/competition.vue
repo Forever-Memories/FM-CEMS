@@ -243,15 +243,19 @@
                 this.$refs[formEdit].validate((valid) => {
                     if (valid) {
                         console.log(this.editFrom)
-                        this.$axios.post('/competition-epidemic/competition/edit',
-                            {
-                                "endTime": this.editFrom.endTime,
-                                "id": this.editFrom.id,
-                                "name": this.editFrom.name,
-                                "placeId": this.editFrom.placeId,
-                                "startTime": this.editFrom.startTime
-                            }
-                        );
+                        if(this.editFrom.startTime >= this.editFrom.endTime) {
+                            this.$message.error('赛事结束时间不晚于开始时间，请设置正确的比赛时间');
+                        } else {
+                            this.$axios.post('/competition-epidemic/competition/edit',
+                                {
+                                    "endTime": this.editFrom.endTime,
+                                    "id": this.editFrom.id,
+                                    "name": this.editFrom.name,
+                                    "placeId": this.editFrom.placeId,
+                                    "startTime": this.editFrom.startTime
+                                }
+                            );
+                        }
                         this.reload();
                     }else {
                         this.$message.error('编辑赛事信息失败');
@@ -262,13 +266,17 @@
             createCompetition(formCompetition) {
                 this.$refs[formCompetition].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/competition-epidemic/competition/create',
-                            {
-                                "endTime": this.createCompetitionFrom.endTime,
-                                "name": this.createCompetitionFrom.name,
-                                "placeId": this.createCompetitionFrom.placeId,
-                                "startTime": this.createCompetitionFrom.startTime
-                            })
+                        if(this.createCompetitionFrom.startTime >= this.createCompetitionFrom.endTime) {
+                            this.$message.error('赛事结束时间不晚于开始时间，请设置正确的比赛时间');
+                        } else {
+                            this.$axios.post('/competition-epidemic/competition/create',
+                                {
+                                    "endTime": this.createCompetitionFrom.endTime,
+                                    "name": this.createCompetitionFrom.name,
+                                    "placeId": this.createCompetitionFrom.placeId,
+                                    "startTime": this.createCompetitionFrom.startTime
+                                })
+                        }
                     } else {
                         this.$message.error('创建场地失败');
                     }

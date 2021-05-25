@@ -126,13 +126,24 @@
             createArrange(createFrom) {
                 this.$refs[createFrom].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/competition-epidemic/organize-arrangement/create',
-                            {
-                                "userId": this.createFrom.userId,
-                                "placeId": this.createFrom.placeId,
-                                "startTime": this.createFrom.startTime,
-                                "endTime": this.createFrom.endTime
-                            })
+                        this.$axios.post('/competition-epidemic/participant-info/infos',
+                            [this.createFrom.userId]).then((res) => {
+                            if (res.data.length === 0 || res.data[0].type !== "组织人员") {
+                                this.$message.error('该用户id无效，无对应组织人员，请检查');
+                            } else {
+                                if(this.createFrom.startTime >= this.createFrom.endTime) {
+                                    this.$message.error('组织活动时间不晚于开始时间，请设置正确的组织活动时间');
+                                } else {
+                                    this.$axios.post('/competition-epidemic/organize-arrangement/create',
+                                        {
+                                            "userId": this.createFrom.userId,
+                                            "placeId": this.createFrom.placeId,
+                                            "startTime": this.createFrom.startTime,
+                                            "endTime": this.createFrom.endTime
+                                        })
+                                }
+                            }
+                    })
                     } else {
                         this.$message.error('创建组织活动安排失败');
                     }

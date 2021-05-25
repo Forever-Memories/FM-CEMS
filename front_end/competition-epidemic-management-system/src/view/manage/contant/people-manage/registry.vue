@@ -50,9 +50,10 @@
                             ref="deleteVisible">
                         <p>确定删除该报名信息吗？</p>
                         <div style="text-align: right; margin: 0">
-                            <el-button type="danger" size="mini" @click="deleteRegistry(scope.row)" >确定</el-button>
+                            <el-button type="danger" size="mini" @click="deleteRegistry(scope.row)">确定</el-button>
                         </div>
-                        <el-button slot="reference" @click="deleteVisible = true" type="danger" size="small">删除</el-button>
+                        <el-button slot="reference" @click="deleteVisible = true" type="danger" size="small">删除
+                        </el-button>
                     </el-popover>
                 </template>
             </el-table-column>
@@ -75,8 +76,9 @@
         data() {
             return {
                 list: null,
+                participateList: null,
                 currentPage: 1,
-                pageSize:10,
+                pageSize: 10,
                 deleteVisible: false,
                 formInline: {
                     competitionName: '',
@@ -103,7 +105,7 @@
                 this.pageSize = size;
                 console.log(this.pageSize)  //每页下拉显示数据
             },
-            handleCurrentChange: function(currentPage){
+            handleCurrentChange: function (currentPage) {
                 this.currentPage = currentPage;
                 console.log(this.currentPage)  //点击第几页
             },
@@ -120,11 +122,30 @@
             createRegistry(formRegistry) {
                 this.$refs[formRegistry].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/competition-epidemic/registry/create',
-                            {
-                                "competitionId": this.createFrom.competitionId,
-                                "userId": this.createFrom.userId
-                            })
+                        this.$axios.post('/competition-epidemic/participant-info/infos',
+                            [this.createFrom.userId]).then((res) => {
+                            if (res.data.length === 0 || res.data[0].type !== "参赛人员") {
+                                this.$message.error('该用户id无效，无对应参赛人员，请检查');
+                            } else {
+                                this.$axios.post('/competition-epidemic/competition/competition',
+                                    {
+                                    "competitionId" :this.createFrom.competitionId
+                                }).then((res2) => {
+                                    console.log("打印")
+                                    console.log(res2.data)
+                                    if(res2.data === null || res2.data === "") {
+                                        this.$message.error('该赛项id无效，无对应赛项，请检查');
+                                    } else {
+                                        this.$axios.post('/competition-epidemic/registry/create',
+                                            {
+                                                "competitionId": this.createFrom.competitionId,
+                                                "userId": this.createFrom.userId
+                                            })
+                                    }
+                                })
+                            }
+                        })
+
                     } else {
                         this.$message.error('新建报名信息息失败');
                     }
