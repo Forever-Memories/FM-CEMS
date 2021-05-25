@@ -35,4 +35,12 @@ public class UserService {
     public void delete(Long userId) {
         userStorage.delete(userId);
     }
+
+    public boolean updatePassword(Long userId, String newPassword) {
+        return userStorage.updatePassword(userId, newPassword);
+    }
+
+    public Optional<UserDO> getUserByPhoneNumber(String phoneNumber) {
+        return userStorage.getUserByPhoneNumber(phoneNumber);
+    }
 }

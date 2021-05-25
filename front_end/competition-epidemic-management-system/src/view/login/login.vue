@@ -29,6 +29,41 @@
     <el-button type="primary" @click="createPeople('createFrom')">确 定</el-button>
   </span>
     </el-dialog>
+    <el-dialog
+            title="修改密码"
+            :visible.sync="dialogUpdatePasswordFormVisible"
+            width="50%">
+        <el-form ref="updatePasswordForm" :model="updatePasswordForm" label-width="120px" size="mini" label-position="left">
+            <el-form-item label="账号" prop="phoneNumber"
+                          :rules="[
+                                { required: true, message: '账号不能为空'},
+                                ]">
+                <el-input v-model="updatePasswordForm.phoneNumber"></el-input>
+            </el-form-item>
+            <el-form-item label="旧密码" prop="oldPassword"
+                          :rules="[
+                                { required: true, message: '旧密码不能为空'},
+                                ]">
+                <el-input v-model="updatePasswordForm.oldPassword" show-password type="text"></el-input>
+            </el-form-item>
+            <el-form-item label="新密码" prop="newPassword1"
+                          :rules="[
+                                { required: true, message: '密码不能为空'},
+                                ]">
+                <el-input v-model="updatePasswordForm.newPassword1" show-password type="text"></el-input>
+            </el-form-item>
+            <el-form-item label="请再次输入新密码" prop="newPassword2"
+                          :rules="[
+                                { required: true, message: '密码不能为空'},
+                                ]">
+                <el-input v-model="updatePasswordForm.newPassword2" show-password type="text"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogUpdatePasswordFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="updatePassword('updatePasswordForm')">确 定</el-button>
+  </span>
+    </el-dialog>
     <el-row>
         <el-col :span="8" :offset="8">
             <el-card class="login-card">
@@ -58,9 +93,10 @@
                     </el-form-item>
 
                     <el-form-item>
-                        <el-button type="primary" @click="submitForm('validateForm')">提交</el-button>
+                        <el-button type="primary" @click="submitForm('validateForm')">登陆</el-button>
                         <el-button @click="resetForm('validateForm')">重置</el-button>
-                        <el-button @click="handleCreate()">参赛用户注册</el-button>
+                        <el-button @click="handleCreate()">注册</el-button>
+                        <el-button @click="handleUpdatePassword()">修改密码</el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -87,9 +123,16 @@
         data() {
             return {
                 dialogCreateFormVisible: false,
+                dialogUpdatePasswordFormVisible: false,
                 validateForm: {
                     account: '',
                     password: ''
+                },
+                updatePasswordForm: {
+                    phoneNumber: null,
+                    oldPassword: null,
+                    newPassword1: null,
+                    newPassword2: null
                 },
                 createFrom: {
                     "participantInfoDO": {
@@ -119,6 +162,41 @@
                         }
                     };
                     this.dialogCreateFormVisible = true;
+                },
+                handleUpdatePassword() {
+                    this.updatePasswordForm = {
+                        phoneNumber: null,
+                        oldPassword: null,
+                        newPassword1: null,
+                        newPassword2: null
+                    };
+                    this.dialogUpdatePasswordFormVisible = true;
+                },
+                updatePassword(updateForm) {
+                    this.$refs[updateForm].validate((valid) => {
+                        if(valid) {
+                            if (this.updatePasswordForm.newPassword1 !== this.updatePasswordForm.newPassword2) {
+                                this.$message.error('两次输入密码不一致，请重新输入');
+                            } else {
+                                this.$axios.post('/competition-epidemic/user/update-password',
+                                    {
+                                        "newPassword": this.updatePasswordForm.newPassword1,
+                                        "oldPassword": this.updatePasswordForm.oldPassword,
+                                        "phoneNumber": this.updatePasswordForm.phoneNumber
+                                    }).then((res) => {
+                                        if(res.data === true) {
+                                            this.$message.success('修改密码成功，请重新登陆');
+                                            this.dialogUpdatePasswordFormVisible = false;
+                                            this.reload()
+                                        } else {
+                                            this.$message.error('修改密码失败，请检查账号和密码');
+                                            this.dialogUpdatePasswordFormVisible = false;
+                                            this.reload()
+                                        }
+                                })
+                            }
+                        }
+                    });
                 },
                 createPeople(formPeople) {
                     this.$refs[formPeople].validate((valid) => {

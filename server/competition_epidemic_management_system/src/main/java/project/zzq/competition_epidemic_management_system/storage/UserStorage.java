@@ -65,7 +65,7 @@ public class UserStorage {
 
 
     public Optional<UserDO> getUserByPhoneNumber(String phoneNumber) {
-        String sql = "SELECT "+ALL_COLUMNS+"FROM `user` WHERE `phone_number` =:phoneNumber";
+        String sql = "SELECT " + ALL_COLUMNS + "FROM `user` WHERE `phone_number` =:phoneNumber";
 
         try {
             return Optional.of(db.queryForObject(sql, ImmutableMap.of("phoneNumber", phoneNumber), ROW_MAPPER));
@@ -75,7 +75,7 @@ public class UserStorage {
     }
 
     public Optional<UserDO> getUserByUserId(Long userId) {
-        String sql = "SELECT "+ALL_COLUMNS+"FROM `user` WHERE `id` =:userId";
+        String sql = "SELECT " + ALL_COLUMNS + "FROM `user` WHERE `id` =:userId";
 
         try {
             return Optional.of(db.queryForObject(sql, ImmutableMap.of("userId", userId), ROW_MAPPER));
@@ -86,5 +86,14 @@ public class UserStorage {
 
     public void delete(Long userId) {
         db.update("DELETE FROM user WHERE id = :id", ImmutableMap.of("id", userId));
+    }
+
+    public boolean updatePassword(Long userId, String newPassword) {
+        try {
+            db.update("UPDATE user SET password =:password WHERE id = :id", ImmutableMap.of("id", userId, "password", newPassword));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
